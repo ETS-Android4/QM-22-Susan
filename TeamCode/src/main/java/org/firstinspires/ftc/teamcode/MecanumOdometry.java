@@ -3,27 +3,13 @@ About this File:
 Not really sure what this is even used for but it exists??
  */
 
-//Wheel Diameter = 96mm
-//96mm * pi = 301.5928947446mm = circumference = 1 wheel rotation
-//537.7 Ticks per 301.5928947446mm distance traveled
-//2 ft (1 tile distance) = 609.6mm
-//609.6/301.5928947446 = 2.0212677773 (rotations per 2ft/tile)
-//2.0212677773 * 537.7 ticks = 1,086.8356838365 ticks per tile?
-//
 
-/*
-* strafe diagonally right 45 degrees /sqrt2 * 1 tile
-* strafe left 2.5 tiles
-* move back .75
-* move forwards .8
-*
-* */
 
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.IMU;
+
 
 public class MecanumOdometry {
     // Encoder constants
@@ -49,7 +35,7 @@ public class MecanumOdometry {
     private double dx = 0;
     private double dy = 0;
     // The IMU handler - tracks the robot's orientation
-    public IMU imu = new IMU();
+
 
     /**
      * Should be called in when the OpMode is initialized
@@ -76,15 +62,7 @@ public class MecanumOdometry {
      * @param b The current front-left encoder value
      * @param c The current back-left encoder value
      */
-    public void start(double a, double b, double c) {
-        imu.update();
-        startingAngle = imu.getZAngle();
-        x = 0;
-        y = 0;
-        oldA = a;
-        oldB = b;
-        oldC = c;
-    }
+   
 
     /**
      * Updates the position and orientation based on new encoder values and the IMU
@@ -105,9 +83,6 @@ public class MecanumOdometry {
         oldB = b;
         oldC = c;
 
-        // Update the orientation using data from the IMU
-        imu.update();
-        theta = imu.getZAngle() - startingAngle;
 
         // Update the total displacement using the orientation and encoder displacements
         double averageEncoderChange = (Math.abs(dB) + Math.abs(dC)) / 2;
