@@ -9,6 +9,7 @@ Not really sure what this is even used for but it exists??
 //2 ft (1 tile distance) = 609.6mm
 //609.6/301.5928947446 = 2.0212677773 (rotations per 2ft/tile)
 //2.0212677773 * 537.7 ticks = 1,086.8356838365 ticks per tile?
+//
 
 /*
 * strafe diagonally right 45 degrees /sqrt2 * 1 tile
