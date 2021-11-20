@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
+import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 
@@ -28,39 +28,21 @@ public class MecanumOdometry extends LinearOpMode {
     public static int wheelDiameter = 96;
     public static double circumference = wheelDiameter* 3.1415;
     public static double ticksPerRotation = 537.7;
-    public static double tileLength = 609.6;
+    public static double tileLength = 457.2;
     public static double rotationsPerTile= tileLength/circumference;
     public static double ticksPerTile= rotationsPerTile * ticksPerRotation;
-
-
-
-    // Encoder constants
-//    public static final double CM_PER_TICK_A = -100.0 / 1673.0;
-//    public static final double CM_PER_TICK_B = -100.0 / 1693.0;
-//    public static final double CM_PER_TICK_C = -100.0 / 1434.0;
-//    // This is theoretically correct, but may need to be changed in practice
-//    public static final double STRAFE_CONSTANT = .5;
-//
-//    // The current position and orientation of the robot
-//    private double x = 0;
-//    private double y = 0;
-//    private double theta = 0;
-//
-//    // The angle at which the robot was facing when the OpMode started
-//    public float startingAngle = 0;
-//
-//    // The previous encoder values
-//    private double oldA = 0;
-//    private double oldB = 0;
-//    private double oldC = 0;
-//
-//    private double dx = 0;
-//    private double dy = 0;
-//    // The IMU handler - tracks the robot's orientation
-
+public static double ticksPerMm= ticksPerRotation/circumference;
+    private final ElapsedTime     runtime = new ElapsedTime();
+    public static int slideLevelOne= 537*5;
+    public static int slideLevelTwo= 537*10;
+    public static int slideLevelThree= 537*20;
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+
+
+
         RFmotor = hardwareMap.get(DcMotor.class, "rightfront");
         RBmotor = hardwareMap.get(DcMotor.class, "rightback");
         LFmotor = hardwareMap.get(DcMotor.class, "leftfront");
@@ -76,22 +58,84 @@ public class MecanumOdometry extends LinearOpMode {
         LFmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LBmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        RFmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+       sliderSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       intakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+    RFmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         RBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         LBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         LBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+sliderSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        telemetry.addData("Status", "Resetting Encoders");    //
+        telemetry.update();
+waitForStart();
 
-        waitForStart();
+encoderDrive(.75,646.577, 0, 0, 646.577 );
+sliderSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+intakeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+sliderSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+turnTable.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+sleep(500);
+    sliderSpool.setTargetPosition(slideLevelTwo);
+intakeMotor.setTargetPosition(5400);
+sleep(500);
+encoderDrive(.75,-380,-380,-380,-380 );
+sleep(500);
+encoderDrive(.75,-1150,1150,1150,-1150 );
 
+turnTable.setTargetPosition(5400);
+encoderDrive(.75,457.2,457.2,457.2,457.2);
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
 
     }
+
+
+
     public void encoderDrive( double speed, double frontLeft, double frontRight, double backLeft, double backRight){
    int leftFrontTarget;
    int rightFrontTarget;
    int leftBackTarget;
    int rightBackTarget;
 
-   leftFrontTarget = LFmotor.getCurrentPosition()+ (int)(frontLeft)
+   leftFrontTarget = LFmotor.getCurrentPosition()+ (int)(frontLeft*ticksPerMm);
+   rightFrontTarget = RFmotor.getCurrentPosition()+ (int)(frontRight*ticksPerMm);
+   leftBackTarget = LBmotor.getCurrentPosition()+ (int)(backLeft*ticksPerMm);
+  rightBackTarget = RBmotor.getCurrentPosition()+ (int)(backRight*ticksPerMm);
+
+  LFmotor.setTargetPosition(leftFrontTarget);
+ RFmotor.setTargetPosition(rightFrontTarget);
+ LBmotor.setTargetPosition(leftBackTarget);
+ RBmotor.setTargetPosition(rightBackTarget);
+
+        LFmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        RFmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        RBmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        LBmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        LFmotor.setPower(Math.abs(speed));
+        RFmotor.setPower(Math.abs(speed));
+        LBmotor.setPower(Math.abs(speed));
+        RBmotor.setPower(Math.abs(speed));
+
+
+
+
+     LFmotor.setPower(0);
+     RFmotor.setPower(0);
+     RBmotor.setPower(0);
+     LBmotor.setPower(0);
+
+
+
+        LFmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+       RFmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
     }
 
 
@@ -104,10 +148,7 @@ public class MecanumOdometry extends LinearOpMode {
 
 
 
-    @Override
-    public void loop() {
 
-    }
 
 
     //public void init(HardwareMap hardwareMap) { imu.initIMU(hardwareMap); }
