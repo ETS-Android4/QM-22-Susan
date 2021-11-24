@@ -18,6 +18,9 @@ import com.qualcomm.robotcore.util.Range;
     DcMotor turnTable;
     DcMotor sliderSpool;
     DcMotor intakeMotor;
+    public static int slideLevelOne= 537*5;
+    public static int slideLevelTwo= 537*10;
+    public static int slideLevelThree= 537*20;
 
     public static final float DRIVE_STICK_THRESHOLD = .0f;
     public static final float DRIVE_STICK_THRESHOLD_SQUARED = DRIVE_STICK_THRESHOLD * DRIVE_STICK_THRESHOLD;
@@ -30,10 +33,18 @@ import com.qualcomm.robotcore.util.Range;
         LBmotor = hardwareMap.get(DcMotor.class, "leftback");
         turnTable = hardwareMap.get(DcMotor.class, "turntable");
         sliderSpool = hardwareMap.get(DcMotor.class, "slider");
-//            intakeMotor= hardwareMap.get(DcMotor.class, "intake");
+         intakeMotor= hardwareMap.get(DcMotor.class, "intake");
+        telemetry.addData("Hardware", "Initialized");
+        telemetry.update();
 
+        //Left front wheel in port 0
+    //Right front in port 1
+    //Left Back port 2
+    //Right Back port 3
+    // turntable in port 0
+    //Slider in port 1
+    //intake in port 2
 
-        telemetry.speak("Press play to start");
 
     }
 
@@ -42,24 +53,33 @@ import com.qualcomm.robotcore.util.Range;
 
             //turntable
             if(gamepad1.a){
-                double turnTablePower=0.50;
+                double turnTablePower=0.2;
                 turnTable.setPower(turnTablePower);
+            telemetry.addData("A button","Pressed");
+            } else{
+                turnTable.setPower(0.0);}
 
 
-            }
-            else
-                turnTable.setPower(0.0);
 
 
 
+
+
+//Slider
 
         if (gamepad1.left_trigger > 0.1)
-            sliderSpool.setPower(.65);
+            sliderSpool.setPower(-1);
         if (gamepad1.left_bumper)
-            sliderSpool.setPower(-.65);
+            sliderSpool.setPower(.5);
         else
             sliderSpool.setPower(0);
-
+//Intake
+        if (gamepad1.right_trigger > 0.1)
+            intakeMotor.setPower(gamepad1.right_trigger);
+        if (gamepad1.right_bumper)
+            intakeMotor.setPower(-.75);
+        else{
+           intakeMotor.setPower(0);}
 
         //Init variables
 
@@ -72,9 +92,9 @@ import com.qualcomm.robotcore.util.Range;
         //DRIVE_STICK_THRESHOLD = deadzone
 
 
-        double Speed = -gamepad1.left_stick_y;
+        double  Strafe= -gamepad1.left_stick_y;
         double Turn = gamepad1.right_stick_x;
-        double Strafe = gamepad1.left_stick_x;
+        double Speed = gamepad1.left_stick_x;
         double MAX_SPEED = 1.0;
 
         double frontLeftPower;
@@ -83,25 +103,7 @@ import com.qualcomm.robotcore.util.Range;
         double rearRightPower;
 
 
-   if (Speed < -DRIVE_STICK_THRESHOLD || Speed > DRIVE_STICK_THRESHOLD || Turn < -DRIVE_STICK_THRESHOLD || Turn > DRIVE_STICK_THRESHOLD || Strafe < -DRIVE_STICK_THRESHOLD || Strafe > DRIVE_STICK_THRESHOLD && (gamepad1.left_stick_button || gamepad1.right_stick_button)){
-       telemetry.speak("You're using slowmode");
 
-       rearRightPower = Range.clip(Speed - Turn + Strafe, -1, 1);
-        rearLeftPower = Range.clip(Speed + Turn - Strafe, -1, 1);
-        frontRightPower = Range.clip(Speed - Turn - Strafe, -1, 1);
-        frontLeftPower = Range.clip(Speed + Turn + Strafe, -1, 1);
-
-
-
-        RBmotor.setPower(rearRightPower * 0.5);
-        RFmotor.setPower(frontRightPower * 0.5);
-        LBmotor.setPower(rearLeftPower * 0.5);
-        LFmotor.setPower(frontLeftPower * 0.5);}
-  else
-        RBmotor.setPower(0);
-        RFmotor.setPower(0);
-        LBmotor.setPower(0);
-        LFmotor.setPower(0);
 
    if (Speed < -DRIVE_STICK_THRESHOLD || Speed > DRIVE_STICK_THRESHOLD || Turn < -DRIVE_STICK_THRESHOLD || Turn > DRIVE_STICK_THRESHOLD || Strafe < -DRIVE_STICK_THRESHOLD || Strafe > DRIVE_STICK_THRESHOLD){
             rearRightPower = Range.clip(Speed - Turn + Strafe, -1, 1);
@@ -115,8 +117,8 @@ import com.qualcomm.robotcore.util.Range;
        telemetry.addData("Back-left motor", "%5.2f", rearLeftPower);
        telemetry.update();
 
-            RBmotor.setPower(rearRightPower);
-            RFmotor.setPower(frontRightPower);
+            RBmotor.setPower(-rearRightPower);
+            RFmotor.setPower(-frontRightPower);
             LBmotor.setPower(rearLeftPower);
             LFmotor.setPower(-frontLeftPower);
 
