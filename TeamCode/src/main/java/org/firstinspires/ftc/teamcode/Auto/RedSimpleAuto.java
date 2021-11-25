@@ -18,9 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.teamcode.simpleBotCode.HardwareSimpleBot;
+
 
 import java.util.List;
 import java.util.Locale;
-
-@Autonomous(name = "Red Simple Auto", gr3oup = "!Primary")
