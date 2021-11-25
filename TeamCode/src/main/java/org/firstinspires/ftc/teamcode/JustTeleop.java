@@ -92,9 +92,9 @@ import com.qualcomm.robotcore.util.Range;
         //DRIVE_STICK_THRESHOLD = deadzone
 
 
-        double  Strafe= -gamepad1.left_stick_y;
+        double Speed = -gamepad1.left_stick_y;
         double Turn = gamepad1.right_stick_x;
-        double Speed = gamepad1.left_stick_x;
+        double Strafe= gamepad1.left_stick_x;
         double MAX_SPEED = 1.0;
 
         double frontLeftPower;
@@ -117,10 +117,10 @@ import com.qualcomm.robotcore.util.Range;
        telemetry.addData("Back-left motor", "%5.2f", rearLeftPower);
        telemetry.update();
 
-            RBmotor.setPower(-rearRightPower);
-            RFmotor.setPower(-frontRightPower);
+            RBmotor.setPower(rearRightPower);
+            RFmotor.setPower(frontRightPower);
             LBmotor.setPower(rearLeftPower);
-            LFmotor.setPower(-frontLeftPower);
+            LFmotor.setPower(frontLeftPower);
 
 
         }
