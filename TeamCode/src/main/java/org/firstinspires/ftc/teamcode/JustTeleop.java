@@ -52,7 +52,7 @@ import com.qualcomm.robotcore.util.Range;
     public void loop() {
 
             //turntable
-            if(gamepad1.a){
+            if(gamepad2.a){
                 double turnTablePower=0.2;
                 turnTable.setPower(turnTablePower);
             telemetry.addData("A button","Pressed");
@@ -67,16 +67,16 @@ import com.qualcomm.robotcore.util.Range;
 
 //Slider
 
-        if (gamepad1.left_trigger > 0.1)
+        if (gamepad2.left_trigger > 0.1)
             sliderSpool.setPower(-1);
-        if (gamepad1.left_bumper)
+        if (gamepad2.left_bumper)
             sliderSpool.setPower(.5);
         else
             sliderSpool.setPower(0);
 //Intake
-        if (gamepad1.right_trigger > 0.1)
-            intakeMotor.setPower(gamepad1.right_trigger);
-        if (gamepad1.right_bumper)
+        if (gamepad2.right_trigger > 0.1)
+            intakeMotor.setPower(gamepad2.right_trigger);
+        if (gamepad2.right_bumper)
             intakeMotor.setPower(-.75);
         else{
            intakeMotor.setPower(0);}
@@ -92,8 +92,8 @@ import com.qualcomm.robotcore.util.Range;
         //DRIVE_STICK_THRESHOLD = deadzone
 
 
-        double Speed = -gamepad1.left_stick_y;
-        double Turn = gamepad1.right_stick_x;
+        double Turn = -gamepad1.left_stick_y;
+        double Speed = gamepad1.right_stick_x;
         double Strafe= gamepad1.left_stick_x;
         double MAX_SPEED = 1.0;
 
@@ -106,9 +106,9 @@ import com.qualcomm.robotcore.util.Range;
 
 
    if (Speed < -DRIVE_STICK_THRESHOLD || Speed > DRIVE_STICK_THRESHOLD || Turn < -DRIVE_STICK_THRESHOLD || Turn > DRIVE_STICK_THRESHOLD || Strafe < -DRIVE_STICK_THRESHOLD || Strafe > DRIVE_STICK_THRESHOLD){
-            rearRightPower = Range.clip(Speed - Turn + Strafe, -1, 1);
+            rearRightPower = Range.clip(Speed - Turn - Strafe, -1, 1);
             rearLeftPower= Range.clip(Speed + Turn - Strafe,-1, 1);
-            frontRightPower= Range.clip(Speed - Turn - Strafe, -1, 1);
+            frontRightPower= Range.clip(Speed + Turn - Strafe, -1, 1);
             frontLeftPower = Range.clip(Speed + Turn + Strafe, -1, 1);
 
        telemetry.addData("Front-right motor", "%5.2f", frontRightPower);
