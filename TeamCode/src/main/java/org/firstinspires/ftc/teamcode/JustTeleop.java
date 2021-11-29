@@ -92,9 +92,9 @@ import com.qualcomm.robotcore.util.Range;
         //DRIVE_STICK_THRESHOLD = deadzone
 
 
-        double Turn = -gamepad1.left_stick_y;
-        double Speed = gamepad1.right_stick_x;
-        double Strafe= gamepad1.left_stick_x;
+        double Turn = gamepad1.left_stick_y;
+        double Strafe = gamepad1.right_stick_x;
+        double Speed= gamepad1.left_stick_x;
         double MAX_SPEED = 1.0;
 
         double frontLeftPower;
