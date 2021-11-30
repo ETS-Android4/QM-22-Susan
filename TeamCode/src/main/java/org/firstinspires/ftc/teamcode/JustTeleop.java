@@ -67,16 +67,24 @@ public class JustTeleop extends OpMode {
             sliderSpool.setPower(.5);
         else
             sliderSpool.setPower(0);
-
+        double funnyNumber = 69420.69420; //Boone's first line of robotics code!!!!
         //Intake
         if (gamepad2.right_trigger > 0.1)
             intakeMotor.setPower(gamepad2.right_trigger);
         if (gamepad2.right_bumper)
             intakeMotor.setPower(-.75);
         else{
-           intakeMotor.setPower(0);}
+            intakeMotor.setPower(0);
+        }
+        if (funnyNumber == 69420.69420){
+            String calebGod = "Boone is the official founder of Niehism";
+            System.out.println(calebGod);
+        }
+
 
         //Init variables
+//hi caleb :)
+
 
 
 //
