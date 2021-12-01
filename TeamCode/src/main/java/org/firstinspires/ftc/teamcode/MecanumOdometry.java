@@ -31,8 +31,8 @@ public class MecanumOdometry extends LinearOpMode {
     public static double tileLength = 457.2;
     public static double rotationsPerTile= tileLength/circumference;
     public static double ticksPerTile= rotationsPerTile * ticksPerRotation;
-public static double ticksPerMm= ticksPerRotation/circumference;
-    private final ElapsedTime     runtime = new ElapsedTime();
+    public static double ticksPerMm= ticksPerRotation/circumference;
+    private final ElapsedTime runtime = new ElapsedTime();
     public static int slideLevelOne= 537*5;
     public static int slideLevelTwo= 537*10;
     public static int slideLevelThree= 537*20;
@@ -62,33 +62,33 @@ public static double ticksPerMm= ticksPerRotation/circumference;
        intakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
-    RFmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RFmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         RBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         LBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         LBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-sliderSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        sliderSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
-waitForStart();
+        waitForStart();
 
-encoderDrive(.75,646.577, 0, 0, 646.577 );
-sliderSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-intakeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-sliderSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-turnTable.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-sleep(500);
-sliderSpool.setTargetPosition(slideLevelTwo);
-sliderSpool.setPower(.65);
-intakeMotor.setTargetPosition(5400);
-intakeMotor.setPower(.65);
-sleep(500);
-encoderDrive(.75,-380,-380,-380,-380 );
-sleep(500);
-encoderDrive(.75,-1150,1150,1150,-1150 );
+        encoderDrive(.75,646.577, 0, 0, 646.577 );
+        sliderSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        intakeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        sliderSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turnTable.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        sleep(500);
+        sliderSpool.setTargetPosition(slideLevelTwo);
+        sliderSpool.setPower(.65);
+        intakeMotor.setTargetPosition(5400);
+        intakeMotor.setPower(.65);
+        sleep(500);
+        encoderDrive(.75,-380,-380,-380,-380 );
+        sleep(500);
+        encoderDrive(.75,-1150,1150,1150,-1150 );
 
-turnTable.setTargetPosition(5400);
-encoderDrive(.75,457.2,457.2,457.2,457.2);
+        turnTable.setTargetPosition(5400);
+        encoderDrive(.75,457.2,457.2,457.2,457.2);
         telemetry.addData("Path", "Complete");
         telemetry.update();
 
@@ -97,46 +97,45 @@ encoderDrive(.75,457.2,457.2,457.2,457.2);
 
 
     public void encoderDrive( double speed, double frontLeft, double frontRight, double backLeft, double backRight){
-   int leftFrontTarget;
-   int rightFrontTarget;
-   int leftBackTarget;
-   int rightBackTarget;
+       int leftFrontTarget;
+       int rightFrontTarget;
+       int leftBackTarget;
+       int rightBackTarget;
 
-   leftFrontTarget = LFmotor.getCurrentPosition()+ (int)(frontLeft*ticksPerMm);
-   rightFrontTarget = RFmotor.getCurrentPosition()+ (int)(frontRight*ticksPerMm);
-   leftBackTarget = LBmotor.getCurrentPosition()+ (int)(backLeft*ticksPerMm);
-  rightBackTarget = RBmotor.getCurrentPosition()+ (int)(backRight*ticksPerMm);
+       leftFrontTarget = LFmotor.getCurrentPosition()+ (int)(frontLeft*ticksPerMm);
+       rightFrontTarget = RFmotor.getCurrentPosition()+ (int)(frontRight*ticksPerMm);
+       leftBackTarget = LBmotor.getCurrentPosition()+ (int)(backLeft*ticksPerMm);
+       rightBackTarget = RBmotor.getCurrentPosition()+ (int)(backRight*ticksPerMm);
 
-  LFmotor.setTargetPosition(leftFrontTarget);
- RFmotor.setTargetPosition(rightFrontTarget);
- LBmotor.setTargetPosition(leftBackTarget);
- RBmotor.setTargetPosition(rightBackTarget);
+       LFmotor.setTargetPosition(leftFrontTarget);
+       RFmotor.setTargetPosition(rightFrontTarget);
+       LBmotor.setTargetPosition(leftBackTarget);
+       RBmotor.setTargetPosition(rightBackTarget);
 
-        LFmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        RFmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        RBmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        LBmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-        LFmotor.setPower(Math.abs(speed));
-        RFmotor.setPower(Math.abs(speed));
-        LBmotor.setPower(Math.abs(speed));
-        RBmotor.setPower(Math.abs(speed));
+       LFmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+       RFmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+       RBmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+       LBmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
-
-
-     LFmotor.setPower(0);
-     RFmotor.setPower(0);
-     RBmotor.setPower(0);
-     LBmotor.setPower(0);
+       LFmotor.setPower(Math.abs(speed));
+       RFmotor.setPower(Math.abs(speed));
+       LBmotor.setPower(Math.abs(speed));
+       RBmotor.setPower(Math.abs(speed));
 
 
 
-        LFmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+       LFmotor.setPower(0);
+       RFmotor.setPower(0);
+       RBmotor.setPower(0);
+       LBmotor.setPower(0);
+
+
+
+       LFmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
        RFmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+       RBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+       LBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 
