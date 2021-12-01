@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp
+@TeleOp(name = "!QM TeleOP", group = "!Primary")
 public class JustTeleop extends OpMode {
     DcMotor RFmotor;
     DcMotor RBmotor;

@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 import org.firstinspires.ftc.teamcode.IMU;
 
-@Autonomous
+//@Autonomous
 public class MecanumOdometry{// extends LinearOpMode {
     // Encoder constants
     public static final double CM_PER_TICK_A = -100.0 / 1673.0;

@@ -97,9 +97,9 @@ public class HardwareRobot {
         hardwareMap = ahwMap;
 
         // Define and Initialize Motors
-        RFmotor = hardwareMap.get(DcMotor.class, "rightRFmotoront");
+        RFmotor = hardwareMap.get(DcMotor.class, "rightfront");
         RBmotor = hardwareMap.get(DcMotor.class, "rightback");
-        LFmotor = hardwareMap.get(DcMotor.class, "leftRFmotoront");
+        LFmotor = hardwareMap.get(DcMotor.class, "leftfront");
         LBmotor = hardwareMap.get(DcMotor.class, "leftback");
         turnTable = hardwareMap.get(DcMotor.class, "turntable");
         sliderSpool = hardwareMap.get(DcMotor.class, "slider");
