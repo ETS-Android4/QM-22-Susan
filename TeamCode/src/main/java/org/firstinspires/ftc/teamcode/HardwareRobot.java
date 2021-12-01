@@ -119,12 +119,20 @@ public class HardwareRobot {
         // Define and Initialize LED's
         // blinkinLedDriver = hwMap.get(RevBlinkinLedDriver.class, "blinkin");
 
+        //TODO: put these into the code?
         /*
         // Set motor directions
-        RFmotor.setDirection(DcMotor.Direction.REVERSE);
+        RFmotor.setDirection(DcMotor.Direction.FORWARD);
+        RBmotor.setDirection(DcMotor.Direction.FORWARD;
         LFmotor.setDirection(DcMotor.Direction.FORWARD);
-        RBmotor.setDirection(DcMotor.Direction.REVERSE);
         LBmotor.setDirection(DcMotor.Direction.FORWARD);
+
+        sliderSpool.setDirection(DcMotor.Direction.FORWARD);
+        intakeMotor.setDirection(DcMotor.Direction.FORWARD);
+        turnTable.setDirection(DcMotor.Direction.FORWARD);
+        */
+
+        /*
 
         // Set rb behavior when power is zero (BRAKE = brake, FLOAT = no brake)
         RFmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

@@ -266,7 +266,7 @@ public class RedAutoSimple extends LinearOpMode{
     }
 
     /**
-     * Logs IMU data to telemetry, TODO: Throttle or disable for competition
+     * Logs IMU data to telemetry, TODO: Throttle or disable for competition - I think we can comment this out
      */
     void composeTelemetry() throws InterruptedException {
 
