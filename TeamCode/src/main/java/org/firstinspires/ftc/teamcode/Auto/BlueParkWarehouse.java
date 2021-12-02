@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.HardwareRobot;
 
 import java.util.Locale;
 
-@Autonomous(name = "BlueParkStorageUnit", group = "!Primary")
+@Autonomous(name = "BlueParkWarehouse", group = "!Primary")
 public class BlueParkWarehouse extends LinearOpMode {
     private final HardwareRobot rb = new HardwareRobot();
     // Declare OpMode members.

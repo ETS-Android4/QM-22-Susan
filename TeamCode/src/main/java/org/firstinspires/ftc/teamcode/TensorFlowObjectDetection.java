@@ -130,10 +130,20 @@ public class TensorFlowObjectDetection extends LinearOpMode {
 
         if (opModeIsActive()) {
             while (opModeIsActive()) {
+                int duckPlacement = 2;
+                /*
+                duckPlacement meaning
+                0 = leftmost spot
+                1 = center spot
+                2 = rightmost spot
+                 */
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                    if (updatedRecognitions == null){
+                        updatedRecognitions = tfod.getRecognitions(); //check recognitions one more time? i think
+                    }
                     if (updatedRecognitions != null) {
                         telemetry.addData("# Object Detected", updatedRecognitions.size());
 
@@ -146,7 +156,24 @@ public class TensorFlowObjectDetection extends LinearOpMode {
                             telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                     recognition.getRight(), recognition.getBottom());
                             i++;
+                            if (recognition.getLabel().equals("Duck") || recognition.getLabel().equals("Cube")){
+                                if(recognition.getLeft() + 50 < 650){
+                                    duckPlacement = 0;
+                                }
+                                else{
+                                    duckPlacement = 1;
+                                }
+                            }
                         }
+                        telemetry.addData("Duck is on ", duckPlacement);
+                        telemetry.update();
+                        //leftmost ~ 280
+                        //rigthmost ~1020
+                        //ducklength ~100
+                        //middle =
+                    }
+                    else {
+                        telemetry.addData("no duck detected", updatedRecognitions.size());
                         telemetry.update();
                     }
                 }
