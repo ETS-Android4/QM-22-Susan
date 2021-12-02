@@ -49,7 +49,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@TeleOp(name = "Concept: TensorFlow Object Detection", group = "Concept")
+@TeleOp(name = "Concept: TensorFlow Object Detection1", group = "Concept")
 
 public class TensorFlowObjectDetection extends LinearOpMode {
     /* Note: This sample uses the all-objects Tensor Flow model (FreightFrenzy_BCDM.tflite), which contains
@@ -64,6 +64,7 @@ public class TensorFlowObjectDetection extends LinearOpMode {
      *  FreightFrenzy_DM.tflite  0: Duck,  1: Marker
      */
     private static final String TFOD_MODEL_ASSET = "FreightFrenzy_BCDM.tflite";
+    //private static final String TFOD_MODEL_ASSET = "FreightFrenzy_DM.tflite";
     private static final String[] LABELS = {
             "Ball",
             "Cube",
@@ -118,7 +119,8 @@ public class TensorFlowObjectDetection extends LinearOpMode {
             // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
             // should be set to the value of the images used to create the TensorFlow Object Detection model
             // (typically 16/9).
-            tfod.setZoom(1.0, 9.0/16.0);
+            tfod.setZoom(2, 16.0/9.0);
+            //tfod.setZoom(1.75, 20.0/9.0);
         }
 
         /** Wait for the game to begin */

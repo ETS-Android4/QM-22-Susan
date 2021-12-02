@@ -18,6 +18,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import static org.firstinspires.ftc.teamcode.Constants.DEFAULT_ACCELERATION_INCREMENT;
+import static org.firstinspires.ftc.teamcode.Constants.GEAR_RATIO_MULTIPLIER;
 
 /*
 import static org.firstinspires.ftc.teamcode.simpleBotCode.simpleBotConstants.DEFAULT_ACCELERATION_INCREMENT;
@@ -30,8 +32,6 @@ import static org.firstinspires.ftc.teamcode.simpleBotCode.simpleBotConstants.ri
 */
 
 public class HardwareRobot {
-    public static final double DEFAULT_ACCELERATION_INCREMENT = 0.02;
-    public static double GEAR_RATIO_MULTIPLIER = 1-(0.388268398268398);
     /* Public OpMode members. */
     //motors
     public DcMotor RFmotor = null;

@@ -21,12 +21,13 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.HardwareRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
+import static org.firstinspires.ftc.teamcode.Constants.DEFAULT_ACCELERATION_INCREMENT;
 
 
 import java.util.List;
 import java.util.Locale;
 
-@Autonomous(name = "Remote Auto", group = "!Primary")
+@Autonomous(name = "RedAuto", group = "!Primary")
 public class RedAutoSimple extends LinearOpMode{
     private static final String TFOD_MODEL_ASSET = "FreightFrenzy_BCDM.tflite";
     private static final String[] LABELS = {
@@ -97,7 +98,8 @@ public class RedAutoSimple extends LinearOpMode{
             // (typically 1.78 or 16/9).
 
             // Uncomment the following line if you want to adjust the magnification and/or the aspect ratio of the input images.
-            tfod.setZoom(3, 1.78); //TODO: will need to adjust this value
+            tfod.setZoom(2, 16.0/9.0);
+            //tfod.setZoom(3, 1.78);
         }
 
 

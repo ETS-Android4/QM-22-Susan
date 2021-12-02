@@ -8,6 +8,9 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD;
+import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD_SQUARED;
+
 
 @TeleOp(name = "!QM TeleOP", group = "!Primary")
 public class JustTeleop extends OpMode {
@@ -18,12 +21,6 @@ public class JustTeleop extends OpMode {
     DcMotor turnTable;
     DcMotor sliderSpool;
     DcMotor intakeMotor;
-    public static int slideLevelOne= 537*5;
-    public static int slideLevelTwo= 537*10;
-    public static int slideLevelThree= 537*20;
-
-    public static final float DRIVE_STICK_THRESHOLD = .0f;
-    public static final float DRIVE_STICK_THRESHOLD_SQUARED = DRIVE_STICK_THRESHOLD * DRIVE_STICK_THRESHOLD;
 
 
     public void init() {
