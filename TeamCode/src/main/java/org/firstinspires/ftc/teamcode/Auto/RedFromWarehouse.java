@@ -23,6 +23,9 @@ import org.firstinspires.ftc.teamcode.HardwareRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import static org.firstinspires.ftc.teamcode.Constants.DEFAULT_ACCELERATION_INCREMENT;
 import static org.firstinspires.ftc.teamcode.Constants.ENCODER_DRIVE_ONE_TILE;
+import static org.firstinspires.ftc.teamcode.Constants.slideLevelOne;
+import static org.firstinspires.ftc.teamcode.Constants.slideLevelThree;
+import static org.firstinspires.ftc.teamcode.Constants.slideLevelTwo;
 
 
 import java.util.List;
@@ -226,17 +229,31 @@ public class RedFromWarehouse extends LinearOpMode{
         rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.4), rb.LFmotor, 1, .05);
         rb.rotate(90, .3);
         //TODO: code to raise up sliders
-        /*if (duckPlacement == 0){
-
+        if (duckPlacement == 0){
+            rb.LifterByEncoder(slideLevelOne, rb.sliderSpool);
         }
         else if (duckPlacement == 1){
-
+            rb.LifterByEncoder(slideLevelTwo, rb.sliderSpool);
+            rb.driveForwardByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*.075), rb.LFmotor, 0.2, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
         }
         else{
-
-        }*/
-
+            rb.LifterByEncoder(slideLevelThree, rb.sliderSpool);
+            rb.driveForwardByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*.15), rb.LFmotor, 0.2, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
+        }
         rb.runIntake(true,true);
+        Thread.sleep(500);
+        rb.runIntake(false,true);
+
+        rb.LifterByEncoder(slideLevelOne, rb.sliderSpool);
+
+        /**
+         * This part is from the alliance shipping hub to the carousel
+         */
+        rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
+        rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*2.5), rb.LFmotor, 1, .05);
+        rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*.3), rb.LFmotor, 0.5, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
+
+        //then turn the carousel on?
 
         /*
         rb.autoDriveSouthWestWithEncoderAndIMU(2104, rb.LFmotor, .8, .06);
@@ -245,7 +262,6 @@ public class RedFromWarehouse extends LinearOpMode{
         rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .05);
         rb.rotate(3, .3);
         */
-        rb.rotate(3, .3);
         rb.driveStop();
 
 

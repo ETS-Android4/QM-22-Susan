@@ -21,6 +21,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import static org.firstinspires.ftc.teamcode.Constants.DEFAULT_ACCELERATION_INCREMENT;
 import static org.firstinspires.ftc.teamcode.Constants.GEAR_RATIO_MULTIPLIER;
 import static org.firstinspires.ftc.teamcode.Constants.INTAKE_SPEED;
+import static org.firstinspires.ftc.teamcode.Constants.blueturnTablePower;
+import static org.firstinspires.ftc.teamcode.Constants.redturnTablePower;
+import static org.firstinspires.ftc.teamcode.Constants.slidePowerDown;
+import static org.firstinspires.ftc.teamcode.Constants.slidePowerUp;
 
 /*
 import static org.firstinspires.ftc.teamcode.simpleBotCode.simpleBotConstants.DEFAULT_ACCELERATION_INCREMENT;
@@ -901,6 +905,69 @@ public class HardwareRobot {
         } else {
             intakeMotor.setPower(0);
         }
+    }
+
+    /**
+     * Turns on the turntable wheel.
+     * -0.2 for red, 0.2 for blue
+     * @param color - true is red, false is blue
+     */
+    public void setTurnTable(boolean isOn, boolean color) {
+        if (isOn){
+            if(color){
+                turnTable.setPower(redturnTablePower);
+            }
+            else{
+                turnTable.setPower(blueturnTablePower);
+            }
+        }
+        else{
+            turnTable.setPower(0.0);
+        }
+    }
+
+    /**
+     * Moves Lift forward using 1 encoder
+     *
+     * @param position       This should be positive or 0?
+     * @param motor          rb.sliderSpool
+     *
+     */
+    public void LifterByEncoder(int position, DcMotor motor) {
+        double power = 0;
+        int oldPosition = motor.getCurrentPosition();
+        int targetPosition = position;
+        double currentPower = 0.2; //Always start at 0.2 power
+
+        if (targetPosition > oldPosition) {
+            power = slidePowerUp;
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition * .75) {
+
+                if (currentPower >= power) {
+                    currentPower = power;
+                } else {
+                    currentPower = currentPower + DEFAULT_ACCELERATION_INCREMENT;
+                }
+                sliderSpool.setPower(currentPower);
+            }
+            //deceleration code:
+
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition) {
+
+                drive(Range.clip(Math.abs(motor.getCurrentPosition() - targetPosition) / motor.getCurrentPosition() + oldPosition, .1, 1));
+
+            }
+
+            sliderSpool.setPower(0);
+        } else if (targetPosition < oldPosition) {
+            power = slidePowerDown;
+            sliderSpool.setPower(-power);
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
+                Thread.yield();
+            }
+            sliderSpool.setPower(0);
+        }
+
     }
 }
 

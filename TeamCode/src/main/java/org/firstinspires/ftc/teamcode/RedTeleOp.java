@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,10 +11,11 @@ import com.qualcomm.robotcore.util.Range;
 
 import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD;
 import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD_SQUARED;
+import static org.firstinspires.ftc.teamcode.Constants.redturnTablePower;
 
 
-@TeleOp(name = "!QM TeleOP", group = "!Primary")
-public class JustTeleop extends OpMode {
+@TeleOp(name = "!Red QM TeleOP", group = "!Primary")
+public class RedTeleOp extends OpMode {
     DcMotor RFmotor;
     DcMotor RBmotor;
     DcMotor LFmotor;
@@ -35,12 +37,12 @@ public class JustTeleop extends OpMode {
         telemetry.update();
 
         //Left front wheel in port 0
-    //Right front in port 1
-    //Left Back port 2
-    //Right Back port 3
-    // turntable in port 0
-    //Slider in port 1
-    //intake in port 2
+        //Right front in port 1
+        //Left Back port 2
+        //Right Back port 3
+        // turntable in port 0
+        //Slider in port 1
+        //intake in port 2
 
 
     }
@@ -50,9 +52,8 @@ public class JustTeleop extends OpMode {
 
         //turntable
         if(gamepad2.a){
-            double turnTablePower=0.2;
-            turnTable.setPower(turnTablePower);
-        telemetry.addData("A button","Pressed");
+            turnTable.setPower(redturnTablePower);
+            telemetry.addData("A button","Pressed");
         } else{
             turnTable.setPower(0.0);}
 
@@ -170,6 +171,7 @@ public class JustTeleop extends OpMode {
        }*/
     }
 }
+
 
 
 

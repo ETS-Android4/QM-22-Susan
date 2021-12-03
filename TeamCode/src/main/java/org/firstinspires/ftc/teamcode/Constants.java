@@ -4,15 +4,25 @@ public class Constants {
     public static double GEAR_RATIO_MULTIPLIER = 1-(0.388268398268398);
     public static final double DEFAULT_ACCELERATION_INCREMENT = 0.02;
 
+    //Turntable:
+    public static final double blueturnTablePower = 0.2;
+    public static final double redturnTablePower = -0.2;
+
     //Controls:
     public static final float DRIVE_STICK_THRESHOLD = .0f;
     public static final float DRIVE_STICK_THRESHOLD_SQUARED = DRIVE_STICK_THRESHOLD * DRIVE_STICK_THRESHOLD;
     public static final float TRIGGER_THRESHOLD = .4f;
     public static final int BUTTON_DELAY = 250; //Delay after any toggle button is pressed before button is checked again. idk
 
+    //Intake slides:
+    //TODO: fix these values (just the non-power ones)
+    public static final int slideLevelZero= 0;
     public static final int slideLevelOne= 537*5;
     public static final int slideLevelTwo= 537*10;
     public static final int slideLevelThree= 537*20;
+    public static final double slidePowerUp = -1;
+    public static final double slidePowerDown = 0.5;
+
     //Motor:
     public static final int LIFTER_MOTOR_UP = -50;
     public static final int LIFTER_MOTOR_MID = (int) (100 * 4.2);
