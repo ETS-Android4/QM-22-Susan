@@ -22,13 +22,14 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.HardwareRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import static org.firstinspires.ftc.teamcode.Constants.DEFAULT_ACCELERATION_INCREMENT;
+import static org.firstinspires.ftc.teamcode.Constants.ENCODER_DRIVE_ONE_TILE;
 
 
 import java.util.List;
 import java.util.Locale;
 
-@Autonomous(name = "RedAuto", group = "!Primary")
-public class RedAutoSimple extends LinearOpMode{
+@Autonomous(name = "RedAuto(Warehouse Start)", group = "!Primary")
+public class RedFromWarehouse extends LinearOpMode{
     private static final String TFOD_MODEL_ASSET = "FreightFrenzy_BCDM.tflite";
     private static final String[] LABELS = {
             "Ball",
@@ -153,65 +154,54 @@ public class RedAutoSimple extends LinearOpMode{
         Thread.sleep(150); //Wait 1000ms for camera to detect after pressing Start (2000 for testing bc idk) TODO: LOWER THIS IF WE NEED MORE TIME FOR AUTO
         telemetry.addData(">", "One second has passsed... Finding duck/marker");
         //Get placement of marker from Camera (which is already on)
-//TODO: fix camera code to match this year's game?
 
-        int numberOfRingsDetected = 0; //Stores number of rings detected by webcam at start of auto
+        int duckPlacement = 2;
+                /*
+                duckPlacement meaning
+                0 = leftmost spot
+                1 = center spot
+                2 = rightmost spot
+                 */
         if (tfod != null) {
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+            if (updatedRecognitions == null){
+                updatedRecognitions = tfod.getRecognitions(); //check recognitions one more time? i think
+            }
             if (updatedRecognitions != null) {
                 telemetry.addData("# Object Detected", updatedRecognitions.size());
-                // step through the list of recognitions and display boundary info.
 
-                /*if (updatedRecognitions.isEmpty()) {
-                    numberOfRingsDetected = 0;
-                }
-                else {*/
-                //essentially it's either going to recognize something or its going to skip over
-                //this part and the number of rings will stay at 0
+                // step through the list of recognitions and display boundary info.
                 int i = 0;
                 for (Recognition recognition : updatedRecognitions) {
                     telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-                    telemetry.addData(String.format("label length", i), recognition.getLabel().length());
                     telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
                             recognition.getLeft(), recognition.getTop());
                     telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                             recognition.getRight(), recognition.getBottom());
-                    if(recognition.getLabel().length() == 4){ //when there are 4 rings
-                        numberOfRingsDetected = 4;
-                    }
-                    else if(recognition.getLabel().length() == 6){ //when there is 1 ring - will print out "Single"
-                        numberOfRingsDetected = 1;
-                    }
-                    else {
-                        telemetry.addData("ERROR:", "Couldn't find any rings or something else went wrong :( defaulting to 4");
-                        numberOfRingsDetected = 4;
+                    i++;
+                    if (recognition.getLabel().equals("Duck") || recognition.getLabel().equals("Cube")){
+                        if(recognition.getLeft() + 50 < 650){
+                            duckPlacement = 0;
+                        }
+                        else{
+                            duckPlacement = 1;
+                        }
                     }
                 }
-                telemetry.addData("HEY!", "Real question tho... does it work??");
+                telemetry.addData("Duck is on ", duckPlacement);
                 telemetry.update();
-                //}
-
-
-                /*
-                if (updatedRecognitions.isEmpty()) {
-                    numberOfRingsDetected = 0;
-                } else if (updatedRecognitions.size() == 4) {
-                    numberOfRingsDetected = 4;
-                } else if (updatedRecognitions.size() == 1) {
-                    numberOfRingsDetected = 1;
-                } else {
-                    telemetry.addData("ERROR:", "Couldn't find any rings :( defaulting to 1");
-                    numberOfRingsDetected = 1;
-                }
-                telemetry.addData("Number of Rings!", updatedRecognitions); //updatedRecognitions.size()
-                telemetry.update();
-                */
-
-            } else {
-                numberOfRingsDetected = 4;
-                telemetry.addData("ERROR:", "Couldn't get new data because updatedRecognitions = null :(");
+                //leftmost ~ 280
+                //rigthmost ~1020
+                //ducklength ~100
+                //middle = 650
+                //0 - turntable
+                //1 - slider
+                //2 - intake
+            }
+            else {
+                telemetry.addData("no duck detected", updatedRecognitions.size());
                 telemetry.update();
             }
         }
@@ -228,7 +218,34 @@ public class RedAutoSimple extends LinearOpMode{
         }
 
         //TODO: Actual Auto Driving Code goes here
+        /**
+         * This section here is the only part of the red code that should differ from Red Storage Unit
+         * Once they deliver they should be in the same position
+         */
+        rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
+        rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.4), rb.LFmotor, 1, .05);
+        rb.rotate(90, .3);
+        //TODO: code to raise up sliders
+        /*if (duckPlacement == 0){
 
+        }
+        else if (duckPlacement == 1){
+
+        }
+        else{
+
+        }*/
+
+        rb.runIntake(true,true);
+
+        /*
+        rb.autoDriveSouthWestWithEncoderAndIMU(2104, rb.LFmotor, .8, .06);
+        rb.autoDriveNorthWestWithEncoderAndIMU(2104, rb.RFmotor, .8, .06);
+        rb.driveForwardByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
+        rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .05);
+        rb.rotate(3, .3);
+        */
+        rb.rotate(3, .3);
         rb.driveStop();
 
 

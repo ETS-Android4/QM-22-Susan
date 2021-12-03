@@ -20,6 +20,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import static org.firstinspires.ftc.teamcode.Constants.DEFAULT_ACCELERATION_INCREMENT;
 import static org.firstinspires.ftc.teamcode.Constants.GEAR_RATIO_MULTIPLIER;
+import static org.firstinspires.ftc.teamcode.Constants.INTAKE_SPEED;
 
 /*
 import static org.firstinspires.ftc.teamcode.simpleBotCode.simpleBotConstants.DEFAULT_ACCELERATION_INCREMENT;
@@ -156,14 +157,14 @@ public class HardwareRobot {
         LBmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         sliderSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        intakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //intakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         // Set all motor encoder options.
         RFmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         RBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         LBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         LBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         sliderSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         turnTable.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
@@ -210,14 +211,14 @@ public class HardwareRobot {
     /**
      * Sets each drive motor to individual speeds, used by main mecanum driving function in simpleBotTeleOp.java
      *
-     * @param RFmotorontrightPower Speed -1 to 1
-     * @param RFmotorontleftPower  Speed -1 to 1
+     * @param frontrightPower Speed -1 to 1
+     * @param frontleftPower  Speed -1 to 1
      * @param backrightPower  Speed -1 to 1
      * @param backleftPower   Speed -1 to 1
      */
-    public void drive(double RFmotorontrightPower, double RFmotorontleftPower, double backrightPower, double backleftPower) {
-        RFmotor.setPower(RFmotorontrightPower);
-        LFmotor.setPower(RFmotorontleftPower);
+    public void drive(double frontrightPower, double frontleftPower, double backrightPower, double backleftPower) {
+        RFmotor.setPower(frontrightPower);
+        LFmotor.setPower(frontleftPower);
         RBmotor.setPower(backrightPower);
         LBmotor.setPower(backleftPower);
     }
@@ -266,11 +267,15 @@ public class HardwareRobot {
      * @param BRspeed
      */
     //This would be NorthEast if front of robot is intake side
+    //these notes here above may not be correct?
     public void driveSouthWestAuto(double FLspeed, double BRspeed) {
         LFmotor.setPower(FLspeed);
         RBmotor.setPower(BRspeed);
     }
-
+    public void driveNorthWestAuto(double FLspeed, double BRspeed) {
+        RFmotor.setPower(FLspeed);
+        LBmotor.setPower(BRspeed);
+    }
     //IMU Functions:
 
     /**
@@ -647,7 +652,35 @@ public class HardwareRobot {
         }
 
     }
+    public void autoDriveNorthWestWithEncoderAndIMU(int positionChange, DcMotor motor, double power, double correctionGain) {
+        power = Math.abs(power);
+        positionChange = (int) (positionChange * GEAR_RATIO_MULTIPLIER); //Used for changing gear ratios without changing all values in code
 
+        int oldPosition = motor.getCurrentPosition();
+        int targetPosition = oldPosition - positionChange;
+        double currentPower = 0.2; //Always start at 0.2 power
+
+        if (positionChange > 0) {
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
+
+                // Use IMU to drive in a straight line.
+                correction = checkCorrection(correctionGain);
+                driveNorthWestAuto(-(power - correction), -(power + correction));
+                Thread.yield();
+            }
+
+            driveStop();
+        } else if (positionChange < 0) {
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
+                // Use IMU to drive in a straight line.
+                correction = checkCorrection(correctionGain);
+                driveNorthWestAuto((power + correction), (power - correction));
+                Thread.yield();
+            }
+            driveStop();
+        }
+
+    }
     /**
      * Drives southwest, assuming tower goals are North and robot shooter is facing towards tower goals.
      *
@@ -851,7 +884,24 @@ public class HardwareRobot {
         }
 
     }
+    /**
+     * Turns intake on and off
+     *
+     * @param isOn  True = intake on, False = intake off
+     * @param eject True = runs in reverse to unstuck rings, False = Runs normally
+     */
+    public void runIntake(boolean isOn, boolean eject) {
 
+        if (isOn) {
+            if (eject)
+                intakeMotor.setPower(-INTAKE_SPEED);
+            else {
+                intakeMotor.setPower(INTAKE_SPEED);
+            }
+        } else {
+            intakeMotor.setPower(0);
+        }
+    }
 }
 
 

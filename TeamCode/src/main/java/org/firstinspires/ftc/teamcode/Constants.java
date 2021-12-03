@@ -28,6 +28,7 @@ public class Constants {
     public static final double TICKS_PER_ROTATION = 537.7;
     public static final double ENCODER_DRIVE_ONE_TILE = 2.0212677773 * TICKS_PER_ROTATION; //Evaluates to 1488.684491978609626 right now
 
+    public static final double INTAKE_SPEED = 1;
 
 //    public static final double LIFTER_MAXIMUM = .58;
 //    public static final double LIFTER_UP = .61;

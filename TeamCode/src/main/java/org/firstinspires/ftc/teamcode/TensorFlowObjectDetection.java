@@ -170,7 +170,10 @@ public class TensorFlowObjectDetection extends LinearOpMode {
                         //leftmost ~ 280
                         //rigthmost ~1020
                         //ducklength ~100
-                        //middle =
+                        //middle = 650
+                        //0 - turntable
+                        //1 - slider
+                        //2 - intake
                     }
                     else {
                         telemetry.addData("no duck detected", updatedRecognitions.size());
