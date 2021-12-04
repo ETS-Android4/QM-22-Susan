@@ -118,7 +118,7 @@ public class RedTeleOp extends OpMode {
         if (rightX < -DRIVE_STICK_THRESHOLD || rightX > DRIVE_STICK_THRESHOLD || leftY < -DRIVE_STICK_THRESHOLD || leftY > DRIVE_STICK_THRESHOLD || leftX < -DRIVE_STICK_THRESHOLD || leftX > DRIVE_STICK_THRESHOLD) {
             //Get stick values and apply modifiers:
             double drive = (-gamepad1.left_stick_y * 1.10) * slowModeMultiplier;
-            double turn = (gamepad1.right_stick_x * 1.25) * slowModeMultiplier;
+            double turn = (gamepad1.right_stick_x * 1) * slowModeMultiplier;
             double strafe = (gamepad1.left_stick_x) * slowModeMultiplier;
 
             //Calculate each individual motor speed using the stick values:
