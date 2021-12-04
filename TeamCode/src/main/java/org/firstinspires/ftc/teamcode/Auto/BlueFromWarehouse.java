@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Locale;
 
 @Autonomous(name = "RedAuto(Warehouse Start)", group = "!Primary")
-public class RedFromWarehouse extends LinearOpMode{
+public class BlueFromWarehouse extends LinearOpMode{
     private static final String TFOD_MODEL_ASSET = "FreightFrenzy_BCDM.tflite";
     private static final String[] LABELS = {
             "Ball",
@@ -254,6 +254,16 @@ public class RedFromWarehouse extends LinearOpMode{
         rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*.3), rb.LFmotor, 0.5, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
 
         //then turn the carousel on?
+        rb.setTurnTable(true,true);
+        Thread.sleep(3000);
+        rb.setTurnTable(false,true);
+
+        //parking in the warehouse
+        rb.strafeRightByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*.75), rb.LFmotor, 1, .05);
+        rb.rotate(-90, .3);
+        rb.strafeRightByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*1), rb.LFmotor, 1, .05);
+        rb.driveForwardByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*3.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
+
 
         /*
         rb.autoDriveSouthWestWithEncoderAndIMU(2104, rb.LFmotor, .8, .06);

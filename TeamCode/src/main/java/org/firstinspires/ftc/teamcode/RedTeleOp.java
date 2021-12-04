@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD;
 import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD_SQUARED;
+import static org.firstinspires.ftc.teamcode.Constants.TRIGGER_THRESHOLD;
 import static org.firstinspires.ftc.teamcode.Constants.redturnTablePower;
 
 
@@ -23,6 +24,7 @@ public class RedTeleOp extends OpMode {
     DcMotor turnTable;
     DcMotor sliderSpool;
     DcMotor intakeMotor;
+    private double slowModeMultiplier = 1;
 
 
     public void init() {
@@ -115,9 +117,9 @@ public class RedTeleOp extends OpMode {
         //DRIVE_STICK_THRESHOLD = deadzone
         if (rightX < -DRIVE_STICK_THRESHOLD || rightX > DRIVE_STICK_THRESHOLD || leftY < -DRIVE_STICK_THRESHOLD || leftY > DRIVE_STICK_THRESHOLD || leftX < -DRIVE_STICK_THRESHOLD || leftX > DRIVE_STICK_THRESHOLD) {
             //Get stick values and apply modifiers:
-            double drive = (-gamepad1.left_stick_y * 1.10);
-            double turn = (gamepad1.right_stick_x * 1.25);
-            double strafe = (gamepad1.left_stick_x);
+            double drive = (-gamepad1.left_stick_y * 1.10) * slowModeMultiplier;
+            double turn = (gamepad1.right_stick_x * 1.25) * slowModeMultiplier;
+            double strafe = (gamepad1.left_stick_x) * slowModeMultiplier;
 
             //Calculate each individual motor speed using the stick values:
             //range.clip calculates a value between min and max, change those values to reduce overall speed
@@ -142,6 +144,11 @@ public class RedTeleOp extends OpMode {
             RFmotor.setPower(0);
             LBmotor.setPower(0);
             LFmotor.setPower(0); //Stop robot if no stick value (delete this if u want to drift lol)
+        }
+        if (gamepad1.left_trigger > TRIGGER_THRESHOLD) {
+            slowModeMultiplier = .25;
+        } else {
+            slowModeMultiplier = 1;
         }
         /*
        if (Speed < -DRIVE_STICK_THRESHOLD || Speed > DRIVE_STICK_THRESHOLD || Turn < -DRIVE_STICK_THRESHOLD || Turn > DRIVE_STICK_THRESHOLD || Strafe < -DRIVE_STICK_THRESHOLD || Strafe > DRIVE_STICK_THRESHOLD){
