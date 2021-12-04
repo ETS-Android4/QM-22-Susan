@@ -85,8 +85,9 @@ public class BlueParkStorageUnit extends LinearOpMode {
 
 
         //TODO: Actual Auto Driving Code goes here
-        rb.driveForwardByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
-        rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .05);
+        rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*.5), rb.LFmotor, 1, .05);
+        rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*1.3), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
+        rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*.7), rb.LFmotor, 1, .05);
         rb.driveStop();
 
 
