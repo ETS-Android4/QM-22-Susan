@@ -130,9 +130,9 @@ public class TensorFlowObjectDetection extends LinearOpMode {
 
         if (opModeIsActive()) {
             while (opModeIsActive()) {
-                int duckPlacement = 2;
+                int barcodePlacement = 2;
                 /*
-                duckPlacement meaning
+                barcodePlacement meaning
                 0 = leftmost spot
                 1 = center spot
                 2 = rightmost spot
@@ -157,15 +157,21 @@ public class TensorFlowObjectDetection extends LinearOpMode {
                                     recognition.getRight(), recognition.getBottom());
                             i++;
                             if (recognition.getLabel().equals("Duck") || recognition.getLabel().equals("Cube")){
+                                //the length of the marker is 100 pixels
+                                //the middle of the zoomed in picture (x-coordinate) is 650
+                                //so checking to see if the marker is on the left or right of the center
+                                //if it's on the left then barcodePlacement is 0
+                                //if it's on the right of the picture then barcodePlacement is 1
+                                //if nothing is sensed, then barcodePlacement must be the one not in the picture
                                 if(recognition.getLeft() + 50 < 650){
-                                    duckPlacement = 0;
+                                    barcodePlacement = 0;
                                 }
                                 else{
-                                    duckPlacement = 1;
+                                    barcodePlacement = 1;
                                 }
                             }
                         }
-                        telemetry.addData("Duck is on ", duckPlacement);
+                        telemetry.addData("Element is on ", barcodePlacement);
                         telemetry.update();
                         //leftmost ~ 280
                         //rigthmost ~1020

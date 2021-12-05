@@ -36,7 +36,8 @@ public class Constants {
     //2.0212677773 * 537.7 ticks = 1,086.8356838365 ticks per tile?
 
     public static final double TICKS_PER_ROTATION = 537.7;
-    public static final double ENCODER_DRIVE_ONE_TILE = 2.0212677773 * TICKS_PER_ROTATION; //Evaluates to 1488.684491978609626 right now
+    public static final double ENCODER_DRIVE_ONE_TILE = 2.0212677773 * TICKS_PER_ROTATION;
+        //Evaluates to 1,086.8356838542 right now
 
     public static final double INTAKE_SPEED = 1;
 
