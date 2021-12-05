@@ -31,8 +31,8 @@ import static org.firstinspires.ftc.teamcode.Constants.slideLevelTwo;
 import java.util.List;
 import java.util.Locale;
 
-@Autonomous(name = "BlueAuto(Warehouse Start)", group = "!Primary")
-public class BlueFromWarehouse extends LinearOpMode{
+@Autonomous(name = "BlueAuto(Storage Unit Start)", group = "!Primary")
+public class BlueFromStorageUnit extends LinearOpMode{
     private static final String TFOD_MODEL_ASSET = "FreightFrenzy_BCDM.tflite";
     private static final String[] LABELS = {
             "Ball",
@@ -225,9 +225,10 @@ public class BlueFromWarehouse extends LinearOpMode{
          * This section here is the only part of the red code that should differ from Red Storage Unit
          * Once they deliver they should be in the same position
          */
-        rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
+        rb.driveForwardByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
         rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.4), rb.LFmotor, 1, .05);
         rb.rotate(90, .3);
+
         //TODO: code to raise up sliders
         if (duckPlacement == 0){
             rb.LifterByEncoder(slideLevelOne, rb.sliderSpool);
@@ -243,6 +244,8 @@ public class BlueFromWarehouse extends LinearOpMode{
         rb.runIntake(true,true);
         Thread.sleep(500);
         rb.runIntake(false,true);
+
+
 
         /**
          * This part is from the alliance shipping hub to the carousel
@@ -379,3 +382,4 @@ public class BlueFromWarehouse extends LinearOpMode{
 
 
 }
+

@@ -31,8 +31,11 @@ import static org.firstinspires.ftc.teamcode.Constants.slideLevelTwo;
 import java.util.List;
 import java.util.Locale;
 
-@Autonomous(name = "BlueAuto(Warehouse Start)", group = "!Primary")
-public class BlueFromWarehouse extends LinearOpMode{
+/**
+ * RED AUTO'S WITH CAMERA SHOULD START FACING THE CAROUSEL
+ */
+@Autonomous(name = "RedAuto(Warehouse Start)", group = "!Primary")
+public class RedFromWarehouse extends LinearOpMode{
     private static final String TFOD_MODEL_ASSET = "FreightFrenzy_BCDM.tflite";
     private static final String[] LABELS = {
             "Ball",
@@ -225,9 +228,10 @@ public class BlueFromWarehouse extends LinearOpMode{
          * This section here is the only part of the red code that should differ from Red Storage Unit
          * Once they deliver they should be in the same position
          */
-        rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
+        rb.driveForwardByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
         rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.4), rb.LFmotor, 1, .05);
         rb.rotate(90, .3);
+
         //TODO: code to raise up sliders
         if (duckPlacement == 0){
             rb.LifterByEncoder(slideLevelOne, rb.sliderSpool);
@@ -244,23 +248,25 @@ public class BlueFromWarehouse extends LinearOpMode{
         Thread.sleep(500);
         rb.runIntake(false,true);
 
+
+
         /**
          * This part is from the alliance shipping hub to the carousel
          */
         rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
         rb.LifterByEncoder(slideLevelOne, rb.sliderSpool);
-        rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*2.5), rb.LFmotor, 1, .05);
+        rb.strafeRightByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*2.5), rb.LFmotor, 1, .05);
         rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*.3), rb.LFmotor, 0.5, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
 
         //then turn the carousel on?
-        rb.setTurnTable(true,false);
+        rb.setTurnTable(true,true);
         Thread.sleep(3000);
-        rb.setTurnTable(false,false);
+        rb.setTurnTable(false,true);
 
         //parking in the warehouse
-        rb.strafeRightByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*.75), rb.LFmotor, 1, .05);
-        rb.rotate(-90, .3);
-        rb.strafeRightByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*1), rb.LFmotor, 1, .05);
+        rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*.75), rb.LFmotor, 1, .05);
+        rb.rotate(90, .3);
+        rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1), rb.LFmotor, 1, .05);
         rb.driveForwardByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*3.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
 
 
@@ -379,3 +385,5 @@ public class BlueFromWarehouse extends LinearOpMode{
 
 
 }
+
+
