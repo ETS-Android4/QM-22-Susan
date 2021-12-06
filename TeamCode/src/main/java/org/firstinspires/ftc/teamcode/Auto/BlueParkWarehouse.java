@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Auto;
 
 import static org.firstinspires.ftc.teamcode.Constants.DEFAULT_ACCELERATION_INCREMENT;
 import static org.firstinspires.ftc.teamcode.Constants.ENCODER_DRIVE_ONE_TILE;
+import static org.firstinspires.ftc.teamcode.Constants.slideLevelZero;
 
 import android.annotation.SuppressLint;
 
@@ -85,9 +86,18 @@ public class BlueParkWarehouse extends LinearOpMode {
 
 
         //TODO: Actual Auto Driving Code goes here
-        rb.driveForwardByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
-        rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .05);
+        rb.LifterByEncoder(slideLevelZero, rb.sliderSpool);
+        rb.drive(-1);
+        Thread.sleep(2500);
+        //rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*1.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
+        //rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .05);
         rb.driveStop();
+        /*
+        rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*1.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
+        rb.strafeRightByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .05);
+        rb.driveStop();
+
+         */
 
 
     }

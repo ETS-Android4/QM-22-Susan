@@ -939,7 +939,7 @@ public class HardwareRobot {
         int targetPosition = position;
         double currentPower = 0.2; //Always start at 0.2 power
 
-        if (targetPosition > oldPosition) {
+        if (targetPosition < oldPosition) {
             power = slidePowerUp;
             while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition * .75) {
 
@@ -959,7 +959,7 @@ public class HardwareRobot {
             }
 
             sliderSpool.setPower(0);
-        } else if (targetPosition < oldPosition) {
+        } else if (targetPosition > oldPosition) {
             power = slidePowerDown;
             sliderSpool.setPower(-power);
             while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {

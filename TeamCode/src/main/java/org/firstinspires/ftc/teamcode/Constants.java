@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 public class Constants {
-    public static double GEAR_RATIO_MULTIPLIER = 1-(0.388268398268398);
+    public static double GEAR_RATIO_MULTIPLIER = 1;//-(0.388268398268398);
     public static final double DEFAULT_ACCELERATION_INCREMENT = 0.02;
 
     //Turntable:
-    public static final double blueturnTablePower = 0.2;
-    public static final double redturnTablePower = -0.2;
+    public static final double blueturnTablePower = 0.25;
+    public static final double redturnTablePower = -0.25;
 
     //Controls:
     public static final float DRIVE_STICK_THRESHOLD = .0f;
@@ -16,10 +16,10 @@ public class Constants {
 
     //Intake slides:
     //TODO: fix these values (just the non-power ones)
-    public static final int slideLevelZero= 0;
-    public static final int slideLevelOne= 537*5;
-    public static final int slideLevelTwo= 537*10;
-    public static final int slideLevelThree= 537*20;
+    public static final int slideLevelZero= -70;
+    public static final int slideLevelOne= -374; //-374
+    public static final int slideLevelTwo= -1004; //-1004
+    public static final int slideLevelThree= -1766; //-1766
     public static final double slidePowerUp = -1;
     public static final double slidePowerDown = 0.5;
 

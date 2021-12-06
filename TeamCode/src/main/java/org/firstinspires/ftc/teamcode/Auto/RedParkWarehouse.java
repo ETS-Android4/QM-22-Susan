@@ -19,6 +19,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.HardwareRobot;
 import static org.firstinspires.ftc.teamcode.Constants.DEFAULT_ACCELERATION_INCREMENT;
 import static org.firstinspires.ftc.teamcode.Constants.ENCODER_DRIVE_ONE_TILE;
+import static org.firstinspires.ftc.teamcode.Constants.slideLevelZero;
 
 import java.util.List;
 import java.util.Locale;
@@ -90,8 +91,13 @@ public class RedParkWarehouse extends LinearOpMode {
 
 
         //TODO: Actual Auto Driving Code goes here
-        rb.driveForwardByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
-        rb.strafeRightByEncoderAndIMU((int)(-ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .05);
+        rb.LifterByEncoder(slideLevelZero, rb.sliderSpool);
+        rb.drive(-1);
+        Thread.sleep(1200);
+        rb.strafe(1);
+        Thread.sleep(300);
+        //rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*1.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
+        //rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .05);
         rb.driveStop();
 
 
