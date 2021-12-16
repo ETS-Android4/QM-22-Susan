@@ -61,9 +61,9 @@ public class BlueTeleOp extends OpMode {
         //Slider
 
         if (gamepad2.left_trigger > 0.1)
-            sliderSpool.setPower(-1);
+            sliderSpool.setPower(1);
         if (gamepad2.left_bumper)
-            sliderSpool.setPower(.5);
+            sliderSpool.setPower(-.5);
         else
             sliderSpool.setPower(0);
         double funnyNumber = 69420.69420; //Boone's first line of robotics code!!!!
@@ -127,10 +127,10 @@ public class BlueTeleOp extends OpMode {
             rearLeftPower = Range.clip(drive + turn - strafe, -1.0, 1.0);
             rearRightPower = Range.clip(drive - turn + strafe, -1.0, 1.0);
 
-            RBmotor.setPower(-rearRightPower);
-            RFmotor.setPower(-frontRightPower);
-            LBmotor.setPower(-rearLeftPower);
-            LFmotor.setPower(-frontLeftPower);
+            RBmotor.setPower(rearRightPower);
+            RFmotor.setPower(frontRightPower);
+            LBmotor.setPower(rearLeftPower);
+            LFmotor.setPower(frontLeftPower);
 
             telemetry.addData("Front-right motor", "%5.2f", frontRightPower);
             telemetry.addData("Back-right motor", "%5.2f", rearRightPower);

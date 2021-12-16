@@ -155,6 +155,13 @@ public class HardwareRobot {
         intake.setPower(0);
         */
 
+        RFmotor.setDirection(DcMotor.Direction.REVERSE);
+        LFmotor.setDirection(DcMotor.Direction.REVERSE);
+        RBmotor.setDirection(DcMotor.Direction.REVERSE);
+        LBmotor.setDirection(DcMotor.Direction.REVERSE);
+
+        sliderSpool.setDirection(DcMotor.Direction.REVERSE);
+
         RFmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RBmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LFmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

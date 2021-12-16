@@ -16,12 +16,12 @@ public class Constants {
 
     //Intake slides:
     //TODO: fix these values (just the non-power ones)
-    public static final int slideLevelZero= -70;
-    public static final int slideLevelOne= -374; //-374
-    public static final int slideLevelTwo= -1004; //-1004
-    public static final int slideLevelThree= -1766; //-1766
-    public static final double slidePowerUp = -1;
-    public static final double slidePowerDown = 0.5;
+    public static final int slideLevelZero= 70;
+    public static final int slideLevelOne= 374; //-374
+    public static final int slideLevelTwo= 1004; //-1004
+    public static final int slideLevelThree= 1766; //-1766
+    public static final double slidePowerUp = 1;
+    public static final double slidePowerDown = -0.5;
 
     //Motor:
     public static final int LIFTER_MOTOR_UP = -50;
