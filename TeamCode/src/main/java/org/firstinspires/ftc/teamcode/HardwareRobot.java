@@ -67,6 +67,10 @@ public class HardwareRobot {
     public Servo rightBlocker = null;
     */
 
+    /*
+    proof that I know how to code:- DePre
+     */
+
     //imu:
     public BNO055IMU imu;
 
