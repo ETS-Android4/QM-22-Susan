@@ -124,8 +124,8 @@ public class BlueTeleOp extends OpMode {
             //range.clip calculates a value between min and max, change those values to reduce overall speed
             frontLeftPower = Range.clip(drive + turn + strafe, -1.0, 1.0);
             frontRightPower = Range.clip(drive - turn - strafe, -1.0, 1.0);
-            rearLeftPower = Range.clip(drive + turn - strafe, -1.0, 1.0);
-            rearRightPower = Range.clip(drive - turn + strafe, -1.0, 1.0);
+            rearLeftPower = Range.clip(drive - turn +strafe, -1.0, 1.0);
+            rearRightPower = Range.clip(drive + turn - strafe, -1.0, 1.0);
 
             RBmotor.setPower(rearRightPower);
             RFmotor.setPower(frontRightPower);
