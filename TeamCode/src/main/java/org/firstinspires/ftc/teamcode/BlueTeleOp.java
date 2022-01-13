@@ -125,7 +125,8 @@ public class BlueTeleOp extends OpMode {
             frontLeftPower = Range.clip(drive + turn + strafe, -1.0, 1.0);
             frontRightPower = Range.clip(drive - turn - strafe, -1.0, 1.0);
             rearLeftPower = Range.clip(drive - turn +strafe, -1.0, 1.0);
-            rearRightPower = Range.clip(drive + turn - strafe, -1.0, 1.0);
+            rearRightPower = Range.clip(drive + turn -
+                    -strafe, -1.0, 1.0);
 
             RBmotor.setPower(rearRightPower);
             RFmotor.setPower(frontRightPower);
