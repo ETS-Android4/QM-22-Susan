@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.PierreTeleOp;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -47,6 +47,11 @@ public class HardwareRobot {
     public DcMotor sliderSpool = null;
     public DcMotor intakeMotor = null;
 
+    public DistanceSensor intakeSensor = null;
+    Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) intakeSensor;
+
+    public DistanceSensor shippingSensor = null;
+    Rev2mDistanceSensor sensorTimeOfFlight1 = (Rev2mDistanceSensor) shippingSensor;
     /*
     public DistanceSensor wobbleRangeSensor = null;
     public DistanceSensor hopperRangeSensor = null;
@@ -69,6 +74,7 @@ public class HardwareRobot {
 
     /*
     proof that I know how to code:- DePre
+    
      */
 
     //imu:
@@ -125,21 +131,13 @@ public class HardwareRobot {
         /*
         sideRangeSensor = hwMap.get(DistanceSensor.class, "side_range_sensor");
         */
+
+        //TODO:uncomment when fixed
+        intakeSensor = hardwareMap.get(DistanceSensor.class, "intake_sensor");
+        shippingSensor = hardwareMap.get(DistanceSensor.class, "shipping_sensor");
+
         // Define and Initialize LED's
         // blinkinLedDriver = hwMap.get(RevBlinkinLedDriver.class, "blinkin");
-
-        //TODO: put these into the code?
-        /*
-        // Set motor directions
-        RFmotor.setDirection(DcMotor.Direction.FORWARD);
-        RBmotor.setDirection(DcMotor.Direction.FORWARD;
-        LFmotor.setDirection(DcMotor.Direction.FORWARD);
-        LBmotor.setDirection(DcMotor.Direction.FORWARD);
-
-        sliderSpool.setDirection(DcMotor.Direction.FORWARD);
-        intakeMotor.setDirection(DcMotor.Direction.FORWARD);
-        turnTable.setDirection(DcMotor.Direction.FORWARD);
-        */
 
         /*
 
@@ -159,10 +157,11 @@ public class HardwareRobot {
         intake.setPower(0);
         */
 
+
         RFmotor.setDirection(DcMotor.Direction.REVERSE);
-        LFmotor.setDirection(DcMotor.Direction.REVERSE);
+        LFmotor.setDirection(DcMotor.Direction.REVERSE); //check this
         RBmotor.setDirection(DcMotor.Direction.REVERSE);
-        LBmotor.setDirection(DcMotor.Direction.REVERSE);
+        LBmotor.setDirection(DcMotor.Direction.FORWARD);
 
         sliderSpool.setDirection(DcMotor.Direction.REVERSE);
 
@@ -174,14 +173,29 @@ public class HardwareRobot {
         sliderSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //intakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         // Set all motor encoder options.
-        RFmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RFmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        RBmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LFmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LBmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         sliderSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         turnTable.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // Set rb behavior when power is zero (BRAKE = brake, FLOAT = no brake)
+        RFmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LFmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        RBmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LBmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+
+        // Set all motors to zero power for initialization
+
+        RFmotor.setPower(0);
+        LFmotor.setPower(0);
+        RBmotor.setPower(0);
+        LBmotor.setPower(0);
+        sliderSpool.setPower(0);
+        intakeMotor.setPower(0);
+        turnTable.setPower(0);
 
 
     }//End init code
@@ -231,7 +245,7 @@ public class HardwareRobot {
      * @param backrightPower  Speed -1 to 1
      * @param backleftPower   Speed -1 to 1
      */
-    public void drive(double frontrightPower, double frontleftPower, double backrightPower, double backleftPower) {
+    public void drivefour(double frontrightPower, double frontleftPower, double backrightPower, double backleftPower) {
         RFmotor.setPower(frontrightPower);
         LFmotor.setPower(frontleftPower);
         RBmotor.setPower(backrightPower);
@@ -241,7 +255,7 @@ public class HardwareRobot {
     /**
      * Strafes Mecanum Drivetrain
      *
-     * @param speed
+     * @param speed single speed for all motors for strafing
      */
     public void strafe(double speed) {
         RFmotor.setPower(speed);
@@ -278,8 +292,8 @@ public class HardwareRobot {
     /**
      * Drives robot southwest assuming North is tower side of field
      *
-     * @param FLspeed
-     * @param BRspeed
+     * @param FLspeed speed for front left motor
+     * @param BRspeed speed for back right motor
      */
     //This would be NorthEast if front of robot is intake side
     //these notes here above may not be correct?
@@ -345,8 +359,8 @@ public class HardwareRobot {
     /**
      * Rotates to a global heading using IMU
      *
-     * @param degrees
-     * @param power
+     * @param degrees how far to turn?
+     * @param power the power at which to turn?
      * @throws InterruptedException
      */
     public void rotateToGlobalAngle(int degrees, double power) throws InterruptedException {
@@ -636,7 +650,7 @@ public class HardwareRobot {
      * @param positionChange Positive or negative value controls direction, Negative Values move north east
      * @param motor          RB.FL
      * @param power          Positive value, 0-1
-     * @param correctionGain
+     * @param correctionGain not entirely sure?
      */
     public void autoDriveSouthWestWithEncoderAndIMU(int positionChange, DcMotor motor, double power, double correctionGain) {
         power = Math.abs(power);
@@ -702,7 +716,7 @@ public class HardwareRobot {
      * @param positionChange Positive or negative value controls direction, Negative Values move north east
      * @param motor          RB.FL
      * @param power          Positive value, 0-1
-     * @param correctionGain
+     * @param correctionGain again not entirely sure lmao
      */
     //We should incorporate this into the code now.
     public void autoDriveNorthEastWithEncoderAndIMU(int positionChange, DcMotor motor, double power, double correctionGain) {
@@ -945,39 +959,43 @@ public class HardwareRobot {
      *
      */
     public void LifterByEncoder(int position, DcMotor motor) {
-        double power = 0;
-        int oldPosition = motor.getCurrentPosition();
-        int targetPosition = position;
-        double currentPower = 0.2; //Always start at 0.2 power
-
-        if (targetPosition < oldPosition) {
-            power = slidePowerUp;
-            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition * .75) {
-
-                if (currentPower >= power) {
-                    currentPower = power;
-                } else {
-                    currentPower = currentPower + DEFAULT_ACCELERATION_INCREMENT;
-                }
-                sliderSpool.setPower(currentPower);
-            }
-            //deceleration code:
-
-            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition) {
-
-                drive(Range.clip(Math.abs(motor.getCurrentPosition() - targetPosition) / motor.getCurrentPosition() + oldPosition, .1, 1));
-
-            }
-
-            sliderSpool.setPower(0);
-        } else if (targetPosition > oldPosition) {
-            power = slidePowerDown;
-            sliderSpool.setPower(-power);
-            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
-                Thread.yield();
-            }
-            sliderSpool.setPower(0);
-        }
+        double power = .8;
+        motor.setTargetPosition(position);
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motor.setPower(power);
+//        double power = 0;
+//        int oldPosition = motor.getCurrentPosition();
+//        int targetPosition = position;
+//        double currentPower = 0.2; //Always start at 0.2 power
+//
+//        if (targetPosition < oldPosition) {
+//            power = slidePowerUp;
+//            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition * .75) {
+//
+//                if (currentPower >= power) {
+//                    currentPower = power;
+//                } else {
+//                    currentPower = currentPower + DEFAULT_ACCELERATION_INCREMENT;
+//                }
+//                sliderSpool.setPower(currentPower);
+//            }
+//            //deceleration code:
+//
+//            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition) {
+//
+//                drive(Range.clip(Math.abs(motor.getCurrentPosition() - targetPosition) / motor.getCurrentPosition() + oldPosition, .1, 1));
+//
+//            }
+//
+//            sliderSpool.setPower(0);
+//        } else if (targetPosition > oldPosition) {
+//            power = slidePowerDown;
+//            sliderSpool.setPower(-power);
+//            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
+//                Thread.yield();
+//            }
+//            sliderSpool.setPower(0);
+//        }
 
     }
 }

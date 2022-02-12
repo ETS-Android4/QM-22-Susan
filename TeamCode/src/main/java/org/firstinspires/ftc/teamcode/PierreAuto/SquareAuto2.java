@@ -1,27 +1,21 @@
-package org.firstinspires.ftc.teamcode.Auto;
-
-import static org.firstinspires.ftc.teamcode.Constants.DEFAULT_ACCELERATION_INCREMENT;
-import static org.firstinspires.ftc.teamcode.Constants.ENCODER_DRIVE_ONE_TILE;
-import static org.firstinspires.ftc.teamcode.Constants.slideLevelOne;
-import static org.firstinspires.ftc.teamcode.Constants.slideLevelZero;
+package org.firstinspires.ftc.teamcode.PierreAuto;
 
 import android.annotation.SuppressLint;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.HardwareRobot;
+import org.firstinspires.ftc.teamcode.PierreTeleOp.HardwareRobot;
 
 import java.util.Locale;
 
-@Autonomous(name = "BlueParkStorageUnit", group = "!Primary")
-public class BlueParkStorageUnit extends LinearOpMode {
+@Autonomous(name = "BlueSquare Auto2", group = "!Primary")
+public class SquareAuto2 extends LinearOpMode {
     private final HardwareRobot rb = new HardwareRobot();
     // Declare OpMode members.
     private final ElapsedTime runtime = new ElapsedTime();
@@ -52,6 +46,7 @@ public class BlueParkStorageUnit extends LinearOpMode {
 
         telemetry.addData("Mode", "Resetting Encoders...");
         telemetry.update();
+        /*
         //Reset Encoders
         rb.RFmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rb.RBmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -70,7 +65,7 @@ public class BlueParkStorageUnit extends LinearOpMode {
         rb.intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.addData("Mode", "Done Resetting Encoders...");
         telemetry.update();
-
+        */
         // Wait for the game to start (driver presses PLAY)
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -87,10 +82,20 @@ public class BlueParkStorageUnit extends LinearOpMode {
 
 
         //TODO: Actual Auto Driving Code goes here
-        rb.LifterByEncoder(slideLevelZero, rb.sliderSpool);
-        rb.strafeRightByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*.5), rb.LFmotor, 1, .05);
-        rb.driveForwardByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.3), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
-        rb.strafeRightByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*.7), rb.LFmotor, 1, .05);
+        /*rb.LifterByEncoder(slideLevelZero, rb.sliderSpool);
+        rb.drive(1);
+        sleep(800);
+        rb.strafe(1);
+        sleep(800);
+         */
+
+
+        rb.drive(.5);
+        sleep(600);
+        rb.strafe(-1);
+        sleep(600);
+        //rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*1.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
+        //rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.2), rb.LFmotor, 1, .05);
         rb.driveStop();
 
 
@@ -165,9 +170,7 @@ public class BlueParkStorageUnit extends LinearOpMode {
     String formatDegrees(double degrees) {
         return String.format(Locale.getDefault(), "%.1f", AngleUnit.DEGREES.normalize(degrees));
     }
-/**
- * Zachary's code
- * star wars transformers marvel nerf baby groot groughgu tj;oasolfjtltyguktfgh6iytijtjoijyoijdfskjg'skljyjyoijoty;ijy
- */
+
 
 }
+

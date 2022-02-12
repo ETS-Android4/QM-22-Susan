@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Auto;
+package org.firstinspires.ftc.teamcode.PierreAuto;
 
 import android.annotation.SuppressLint;
 
@@ -9,17 +9,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.Func;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.teamcode.HardwareRobot;
+import org.firstinspires.ftc.teamcode.PierreTeleOp.HardwareRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import static org.firstinspires.ftc.teamcode.Constants.DEFAULT_ACCELERATION_INCREMENT;
 import static org.firstinspires.ftc.teamcode.Constants.ENCODER_DRIVE_ONE_TILE;
@@ -228,9 +225,9 @@ public class RedFromStorageUnit extends LinearOpMode{
          * This section here is the only part of the red code that should differ from Red Storage Unit
          * Once they deliver they should be in the same position
          */
-        rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
+        /*rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
         rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1.4), rb.LFmotor, 1, .05);
-        rb.rotate(90, .3);
+        rb.rotate(90, .3);*/
 
         //TODO: code to raise up sliders
         if (duckPlacement == 0){
@@ -253,8 +250,9 @@ public class RedFromStorageUnit extends LinearOpMode{
         /**
          * This part is from the alliance shipping hub to the carousel
          */
+        /*
         rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
-        rb.LifterByEncoder(slideLevelOne, rb.sliderSpool);
+        rb.LifterByEncoder(0, rb.sliderSpool);
         rb.strafeRightByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*2.5), rb.LFmotor, 1, .05);
         rb.driveForwardByEncoderAndIMU(-(int)(ENCODER_DRIVE_ONE_TILE*.3), rb.LFmotor, 0.5, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
 
@@ -268,7 +266,7 @@ public class RedFromStorageUnit extends LinearOpMode{
         rb.rotate(90, .3);
         rb.strafeRightByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*1), rb.LFmotor, 1, .05);
         rb.driveForwardByEncoderAndIMU((int)(ENCODER_DRIVE_ONE_TILE*3.5), rb.LFmotor, 1, .06, DEFAULT_ACCELERATION_INCREMENT * 2); //Drive to A Zone
-
+        */
 
         /*
         rb.autoDriveSouthWestWithEncoderAndIMU(2104, rb.LFmotor, .8, .06);

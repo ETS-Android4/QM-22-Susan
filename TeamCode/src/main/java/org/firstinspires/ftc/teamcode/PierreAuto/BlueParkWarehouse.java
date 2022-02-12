@@ -1,7 +1,5 @@
-package org.firstinspires.ftc.teamcode.Auto;
+package org.firstinspires.ftc.teamcode.PierreAuto;
 
-import static org.firstinspires.ftc.teamcode.Constants.DEFAULT_ACCELERATION_INCREMENT;
-import static org.firstinspires.ftc.teamcode.Constants.ENCODER_DRIVE_ONE_TILE;
 import static org.firstinspires.ftc.teamcode.Constants.slideLevelZero;
 
 import android.annotation.SuppressLint;
@@ -15,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.HardwareRobot;
+import org.firstinspires.ftc.teamcode.PierreTeleOp.HardwareRobot;
 
 import java.util.Locale;
 

@@ -11,15 +11,15 @@ public class Constants {
     //Controls:
     public static final float DRIVE_STICK_THRESHOLD = .0f;
     public static final float DRIVE_STICK_THRESHOLD_SQUARED = DRIVE_STICK_THRESHOLD * DRIVE_STICK_THRESHOLD;
-    public static final float TRIGGER_THRESHOLD = .4f;
+    public static final float TRIGGER_THRESHOLD = .07f;
     public static final int BUTTON_DELAY = 250; //Delay after any toggle button is pressed before button is checked again. idk
 
     //Intake slides:
     //TODO: fix these values (just the non-power ones)
-    public static final int slideLevelZero= 70;
-    public static final int slideLevelOne= 374; //-374
-    public static final int slideLevelTwo= 1004; //-1004
-    public static final int slideLevelThree= 1766; //-1766
+    public static final int slideLevelZero= -70;
+    public static final int slideLevelOne= -374; //-374
+    public static final int slideLevelTwo= -1004; //-1004
+    public static final int slideLevelThree= -1796; //-1766
     public static final double slidePowerUp = 1;
     public static final double slidePowerDown = -0.5;
 

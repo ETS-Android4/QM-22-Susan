@@ -3,8 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.HardwareRobot;
-import org.firstinspires.ftc.teamcode.MecanumOdometry;
+import org.firstinspires.ftc.teamcode.PierreTeleOp.HardwareRobot;
 
 @TeleOp(name = "EncoderOdometryTest", group = "Test")
 public class EncoderOdometryTest extends LinearOpMode {

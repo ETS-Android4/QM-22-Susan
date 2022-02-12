@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.PierreTeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -14,8 +14,8 @@ import static org.firstinspires.ftc.teamcode.Constants.TRIGGER_THRESHOLD;
 import static org.firstinspires.ftc.teamcode.Constants.blueturnTablePower;
 
 
-@TeleOp(name = "!Blue QM TeleOP", group = "!Primary")
-public class BlueTeleOp extends OpMode {
+@TeleOp(name = "!DONTUSE - Blue QM TeleOP", group = "!Primary")
+public class BlueTeleOpBad extends OpMode {
     DcMotor RFmotor;
     DcMotor RBmotor;
     DcMotor LFmotor;
@@ -34,6 +34,10 @@ public class BlueTeleOp extends OpMode {
         turnTable = hardwareMap.get(DcMotor.class, "turntable");
         sliderSpool = hardwareMap.get(DcMotor.class, "slider");
         intakeMotor= hardwareMap.get(DcMotor.class, "intake");
+        RFmotor.setDirection(DcMotor.Direction.REVERSE);
+        LFmotor.setDirection(DcMotor.Direction.REVERSE); //check this
+        RBmotor.setDirection(DcMotor.Direction.REVERSE);
+        LBmotor.setDirection(DcMotor.Direction.FORWARD);
         telemetry.addData("Hardware", "Initialized");
         telemetry.update();
 
@@ -124,9 +128,10 @@ public class BlueTeleOp extends OpMode {
             //range.clip calculates a value between min and max, change those values to reduce overall speed
             frontLeftPower = Range.clip(drive + turn + strafe, -1.0, 1.0);
             frontRightPower = Range.clip(drive - turn - strafe, -1.0, 1.0);
-            rearLeftPower = Range.clip(drive - turn +strafe, -1.0, 1.0);
-            rearRightPower = Range.clip(drive + turn -
-                    -strafe, -1.0, 1.0);
+            rearLeftPower = Range.clip(drive - turn + strafe, -1.0, 1.0);
+            rearRightPower = Range.clip(drive + turn -strafe, -1.0, 1.0);
+
+
 
             RBmotor.setPower(rearRightPower);
             RFmotor.setPower(frontRightPower);
