@@ -1,6 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 public class Constants {
+    //Turret:
+    static final double TURRET_INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
+    static final int    TURRET_CYCLE_MS    =   50;     // period of each cycle
+    static final double TURRET_MAX_POS     =  1.0;     // Maximum rotational position
+    static final double TURRET_MIN_POS     =  0.0;     // Minimum rotational position
+
     public static double GEAR_RATIO_MULTIPLIER = 1;//-(0.388268398268398);
     public static final double DEFAULT_ACCELERATION_INCREMENT = 0.02;
 

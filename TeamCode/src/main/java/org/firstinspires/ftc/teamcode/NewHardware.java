@@ -43,12 +43,18 @@ public class NewHardware {
     public DcMotor LFmotor = null;
     public DcMotor RBmotor = null;
     public DcMotor LBmotor = null;
+    public DcMotor turnTable = null;
+    public DcMotor sliderSpool = null;
+    public DcMotor intakeMotor = null;
 
     public DistanceSensor intakeSensor = null;
     Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) intakeSensor;
 
     public DistanceSensor shippingSensor = null;
     Rev2mDistanceSensor sensorTimeOfFlight1 = (Rev2mDistanceSensor) shippingSensor;
+
+    public Servo turretBottom = null;
+    public Servo turretLift = null;
     /*
     public DistanceSensor wobbleRangeSensor = null;
     public DistanceSensor hopperRangeSensor = null;
@@ -113,10 +119,18 @@ public class NewHardware {
         RBmotor = hardwareMap.get(DcMotor.class, "rightback");
         LFmotor = hardwareMap.get(DcMotor.class, "leftfront");
         LBmotor = hardwareMap.get(DcMotor.class, "leftback");
+
+        //turnTable = hardwareMap.get(DcMotor.class, "turntable");
+        sliderSpool = hardwareMap.get(DcMotor.class, "slider");
+        intakeMotor= hardwareMap.get(DcMotor.class, "intake");
+
+
         // Define and Initialize Servos
         /*
         shooter = hwMap.get(Servo.class, "shooter");
         */
+        turretBottom = hardwareMap.get(Servo.class, "turretBottom");
+        turretLift = hardwareMap.get(Servo.class, "turretLift");
 
         //Define and Initialize BNO055IMU
         imu = hardwareMap.get(BNO055IMU.class, "imu 1");
@@ -124,6 +138,11 @@ public class NewHardware {
         /*
         sideRangeSensor = hwMap.get(DistanceSensor.class, "side_range_sensor");
         */
+
+/*
+        intakeSensor = hardwareMap.get(DistanceSensor.class, "intake_sensor");
+        shippingSensor = hardwareMap.get(DistanceSensor.class, "shipping_sensor");
+*/
 
         // Define and Initialize LED's
         // blinkinLedDriver = hwMap.get(RevBlinkinLedDriver.class, "blinkin");
@@ -146,18 +165,16 @@ public class NewHardware {
         intake.setPower(0);
         */
 
-
         RFmotor.setDirection(DcMotor.Direction.FORWARD);
-        LFmotor.setDirection(DcMotor.Direction.REVERSE); //check this
+        LFmotor.setDirection(DcMotor.Direction.REVERSE);
         RBmotor.setDirection(DcMotor.Direction.FORWARD);
         LBmotor.setDirection(DcMotor.Direction.REVERSE);
-
 
         RFmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RBmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LFmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LBmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+        //sliderSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //intakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         // Set all motor encoder options.
@@ -165,14 +182,20 @@ public class NewHardware {
         RBmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LFmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LBmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        /*
+        sliderSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        turnTable.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+         */
         // Set rb behavior when power is zero (BRAKE = brake, FLOAT = no brake)
         RFmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LFmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         RBmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LBmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-
-        // Set all motors to zero power for initialization
+        //.o; Set all motors to zero power for initialization
 
         RFmotor.setPower(0);
         LFmotor.setPower(0);

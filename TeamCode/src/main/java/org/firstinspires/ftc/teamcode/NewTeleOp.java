@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Func;
@@ -14,9 +15,15 @@ import java.util.Locale;
 
 import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD;
 import static org.firstinspires.ftc.teamcode.Constants.TRIGGER_THRESHOLD;
+import static org.firstinspires.ftc.teamcode.Constants.blueturnTablePower;
+import static org.firstinspires.ftc.teamcode.Constants.redturnTablePower;
+import static org.firstinspires.ftc.teamcode.Constants.TURRET_INCREMENT;
+import static org.firstinspires.ftc.teamcode.Constants.TURRET_CYCLE_MS;
+import static org.firstinspires.ftc.teamcode.Constants.TURRET_MAX_POS;
+import static org.firstinspires.ftc.teamcode.Constants.TURRET_MIN_POS;
 
 
-@TeleOp(name = "!DriveOnlyTeleOp", group = "!Primary")
+@TeleOp(name = "!SusanTeleOp", group = "!Primary")
 public class NewTeleOp extends LinearOpMode {
 
     //private final FtcDashboard dashboard = FtcDashboard.getInstance(); //Comment this out when not using dashboard
@@ -32,6 +39,8 @@ public class NewTeleOp extends LinearOpMode {
     DcMotor intakeMotor;*/
     private double slowModeMultiplier = 1;
     Orientation angles;
+    double tbottom = (TURRET_MAX_POS - TURRET_MIN_POS) / 2;
+    double tlifter = (TURRET_MAX_POS - TURRET_MIN_POS) / 2; // Start at halfway position
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -80,14 +89,26 @@ public class NewTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
 
             drive(); //Drive robot with sticks
+            //turntable(); //
+            //telemetry.addData("Status:", "turntable ok");
+            //telemetry.update();
+            slider();
+            //telemetry.addData("Status:", "slider ok");
+            //telemetry.update();
+            intake();
             //telemetry.addData("Status:", "intake ok");
             //telemetry.update();
+            turret();
             telemetry.addData("FR Encoder", rb.RFmotor.getCurrentPosition());
             telemetry.addData("FL Encoder", rb.LFmotor.getCurrentPosition());
             telemetry.addData("BR Encoder", rb.RBmotor.getCurrentPosition());
             telemetry.addData("BL Encoder", rb.LBmotor.getCurrentPosition());
+            telemetry.addData("Slider Spool Encoder", rb.sliderSpool.getCurrentPosition());
+
+            /*
             telemetry.addData("trigger value", gamepad2.left_trigger);
             telemetry.addData("left stick value", gamepad2.left_stick_y);
+            */
             telemetry.update();
         }
     }
@@ -116,6 +137,11 @@ public class NewTeleOp extends LinearOpMode {
 //        pattern = RevBlinkinLedDriver.BlinkinPattern.ORANGE;
 //        blinkinLedDriver.setPattern(pattern);
         //DRIVE_STICK_THRESHOLD = deadzone
+        if (gamepad1.b) {
+            slowModeMultiplier = .25;
+        } else {
+            slowModeMultiplier = 1;
+        }
         if (rightX < -DRIVE_STICK_THRESHOLD || rightX > DRIVE_STICK_THRESHOLD || leftY < -DRIVE_STICK_THRESHOLD || leftY > DRIVE_STICK_THRESHOLD || leftX < -DRIVE_STICK_THRESHOLD || leftX > DRIVE_STICK_THRESHOLD) {
             //Get stick values and apply modifiers:
 
@@ -130,38 +156,12 @@ public class NewTeleOp extends LinearOpMode {
 
             //Calculate each individual motor speed using the stick values:
             //range.clip calculates a value between min and max, change those values to reduce overall speed
-            /*
-            frontLeftPower = Range.clip(drive + strafe + turn, -1.0, 1.0);
-            frontRightPower = Range.clip(drive - strafe - turn, -1.0, 1.0);
-            rearLeftPower = Range.clip(drive - strafe + turn, -1.0, 1.0);
-            rearRightPower = Range.clip(drive + strafe - turn, -1.0, 1.0);
-             */
             frontLeftPower = drive + strafe + turn;
             frontRightPower = drive - strafe - turn;
             rearLeftPower = drive - strafe + turn;
             rearRightPower = drive + strafe - turn;
             rb.drivefour(frontRightPower, frontLeftPower, rearRightPower, rearLeftPower);
-            //rb.drive(frontRightPower, 1, rearRightPower, rearLeftPower);
 
-            /*
-            frontLeftPower = Range.clip(drive + turn + strafe, -1.0, 1.0);
-            frontRightPower = Range.clip(drive - turn - strafe, -1.0, 1.0);
-            rearLeftPower = Range.clip(drive - turn + strafe, -1.0, 1.0);
-            rearRightPower = Range.clip(drive + turn - strafe, -1.0, 1.0);
-            rb.drive(frontRightPower, frontLeftPower, rearRightPower, rearLeftPower);
-            */
-            /*
-            RBmotor.setPower(rearRightPower);
-            RFmotor.setPower(frontRightPower);
-            LBmotor.setPower(rearLeftPower);
-            LFmotor.setPower(frontLeftPower);
-
-            telemetry.addData("Front-right motor", "%5.2f", frontRightPower);
-            telemetry.addData("Back-right motor", "%5.2f", rearRightPower);
-            telemetry.addData("Front-left motor", "%5.2f", frontLeftPower);
-            telemetry.addData("Back-left motor", "%5.2f", rearLeftPower);
-            telemetry.update();
-             */
         }
         else {
             rb.driveStop();
@@ -169,14 +169,132 @@ public class NewTeleOp extends LinearOpMode {
             RBmotor.setPower(0);
             RFmotor.setPower(0);
             LBmotor.setPower(0);
-            LFmotor.setPower(0); */
+            LFmotor.setPower(0);
+            */
             //Stop robot if no stick value (delete this if u want to drift lol)
         }
-        if (gamepad1.left_trigger > TRIGGER_THRESHOLD) {
-            slowModeMultiplier = .25;
-        } else {
-            slowModeMultiplier = 1;
+    }
+    private void turntable(){ //throws InterruptedException {
+        //turntable
+        if(gamepad2.a){
+            rb.turnTable.setPower(redturnTablePower);
+            telemetry.addData("A button","Pressed");
+            telemetry.update();
         }
+        else if(gamepad2.b){
+            rb.turnTable.setPower(blueturnTablePower);
+            telemetry.addData("A button","Pressed");
+            telemetry.update();
+        }
+        else {
+            rb.turnTable.setPower(0);
+            telemetry.addData("A button", "Not Pressed");
+            telemetry.update();
+        }
+    }
+
+    private void slider() throws InterruptedException{
+        //Slider
+        /*
+        if (!encoderfunctionoff){
+            if (gamepad2.left_trigger > 0.05f)
+                rb.sliderSpool.setPower(.75);
+            else if (gamepad2.left_bumper)
+                rb.sliderSpool.setPower(-.75);
+            else
+                rb.sliderSpool.setPower(0);
+        }
+        else {
+            if (gamepad2.left_trigger > 0.05f && rb.sliderSpool.getCurrentPosition() < -30)
+                rb.sliderSpool.setPower(.75);
+            else if (gamepad2.left_bumper && rb.sliderSpool.getCurrentPosition() > -1840)
+                rb.sliderSpool.setPower(-.75);
+            else
+                rb.sliderSpool.setPower(0);
+        }
+        */
+        //TODO: Check these to make sure the gamepad is correct
+        if (gamepad2.left_trigger > TRIGGER_THRESHOLD)
+            rb.sliderSpool.setPower(.75);
+        else if (gamepad2.left_bumper)
+            rb.sliderSpool.setPower(-.75);
+        else
+            rb.sliderSpool.setPower(0);
+
+        /*if ((gamepad2.left_trigger > 0.05f && rb.sliderSpool.getCurrentPosition() < -30))
+            rb.sliderSpool.setPower(.75);
+        else if (gamepad2.left_bumper && rb.sliderSpool.getCurrentPosition() > -1840)
+            rb.sliderSpool.setPower(-.75);
+        else if (gamepad2.dpad_down)
+            rb.sliderSpool.setPower(.75);
+        else if (gamepad2.dpad_up)
+            rb.sliderSpool.setPower(-.75);
+        else
+            rb.sliderSpool.setPower(0);
+        if (gamepad2.x){
+            rb.sliderSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rb.sliderSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }*/
+    }
+
+    private void intake(){ //throws InterruptedException{
+        //Intake
+        /*
+        right trigger -
+        right bumper
+         */
+        if (gamepad2.right_trigger > 0.1f)
+            rb.intakeMotor.setPower(1);
+        else if (gamepad2.right_bumper)
+            rb.intakeMotor.setPower(-1);
+        else {
+            rb.intakeMotor.setPower(0);
+        }
+        /*if (!intakefunctionon) {
+            if (gamepad2.right_trigger > 0.1f)
+                rb.intakeMotor.setPower(1);
+            else if (gamepad2.right_bumper)
+                rb.intakeMotor.setPower(-1);
+            else {
+                rb.intakeMotor.setPower(0);
+            }
+        }
+        else {
+            if (gamepad2.right_trigger > 0.1f)
+                rb.intakeMotor.setPower(1);
+            else if ((gamepad2.right_bumper || !cargoin) && rb.sliderSpool.getCurrentPosition() > -200) {
+                //the encoder value condition is in place to ensure that the intake doesn't turn on
+                //when trying to spit out cargo
+                rb.intakeMotor.setPower(-1);
+            }
+            else {
+                rb.intakeMotor.setPower(0);
+            }
+        }*/
+    }
+    private void turret() throws InterruptedException{
+        if (gamepad1.left_trigger > TRIGGER_THRESHOLD)
+            tbottom += TURRET_INCREMENT;
+        else if (gamepad1.right_trigger > TRIGGER_THRESHOLD)
+            tbottom -= TURRET_INCREMENT;
+
+        if (gamepad1.left_bumper)
+            tlifter += TURRET_INCREMENT;
+        else if (gamepad1.right_bumper)
+            tlifter -= TURRET_INCREMENT;
+
+        // Display the current value
+        telemetry.addData("Bottom Servo Position", "%5.2f", rb.turretBottom.getPosition());
+        telemetry.addData("Lifter Servo Position", "%5.2f", rb.turretLift.getPosition());
+        telemetry.addData(">", "Press Stop to end test." );
+        telemetry.update();
+
+        // Set the servo to the new position and pause;
+        //turretBottom.setPower(bottom);
+        rb.turretBottom.setPosition(tbottom);
+        rb.turretLift.setPosition(tlifter);
+        sleep(TURRET_CYCLE_MS);
+        idle();
     }
 
     /**
