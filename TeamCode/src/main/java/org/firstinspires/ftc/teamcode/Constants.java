@@ -2,10 +2,17 @@ package org.firstinspires.ftc.teamcode;
 
 public class Constants {
     //Turret:
-    static final double TURRET_INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
-    static final int    TURRET_CYCLE_MS    =   50;     // period of each cycle
-    static final double TURRET_MAX_POS     =  1.0;     // Maximum rotational position
-    static final double TURRET_MIN_POS     =  0.0;     // Minimum rotational position
+    static final double BTURRET_INCREMENT   = 0.005;
+    static final double ATURRET_INCREMENT   = 0.0025; // amount to slew servo each CYCLE_MS cycle
+    static final int    TURRET_CYCLE_MS    =   52;     // period of each cycle
+    static final double BTURRET_MAX_POS     =  .65;     // Maximum rotational position
+    static final double BTURRET_MIN_POS     =  .38;     // Minimum rotational position
+    static final double ATURRET_MAX_POS     =  .52;     // Maximum rotational position
+    static final double ATURRET_MIN_POS     =  .42;     // Minimum rotational position
+    static final double TURRETTOPLEVEL      =  .43;
+    static final double TURRETSHARED        =  .5;
+    //.45, .5
+
 
     public static double GEAR_RATIO_MULTIPLIER = 1;//-(0.388268398268398);
     public static final double DEFAULT_ACCELERATION_INCREMENT = 0.02;
@@ -16,6 +23,7 @@ public class Constants {
 
     //Controls:
     public static final float DRIVE_STICK_THRESHOLD = .0f;
+    public static final float DRIVE_STICK_THRESHOLD2 = .5f;
     public static final float DRIVE_STICK_THRESHOLD_SQUARED = DRIVE_STICK_THRESHOLD * DRIVE_STICK_THRESHOLD;
     public static final float TRIGGER_THRESHOLD = .07f;
     public static final int BUTTON_DELAY = 250; //Delay after any toggle button is pressed before button is checked again. idk

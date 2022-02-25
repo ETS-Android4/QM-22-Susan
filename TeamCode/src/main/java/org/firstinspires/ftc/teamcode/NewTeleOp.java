@@ -13,14 +13,20 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import java.util.Locale;
 
+import static org.firstinspires.ftc.teamcode.Constants.BTURRET_INCREMENT;
+import static org.firstinspires.ftc.teamcode.Constants.ATURRET_INCREMENT;
 import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD;
+import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD2;
 import static org.firstinspires.ftc.teamcode.Constants.TRIGGER_THRESHOLD;
 import static org.firstinspires.ftc.teamcode.Constants.blueturnTablePower;
 import static org.firstinspires.ftc.teamcode.Constants.redturnTablePower;
-import static org.firstinspires.ftc.teamcode.Constants.TURRET_INCREMENT;
 import static org.firstinspires.ftc.teamcode.Constants.TURRET_CYCLE_MS;
-import static org.firstinspires.ftc.teamcode.Constants.TURRET_MAX_POS;
-import static org.firstinspires.ftc.teamcode.Constants.TURRET_MIN_POS;
+import static org.firstinspires.ftc.teamcode.Constants.BTURRET_MAX_POS;
+import static org.firstinspires.ftc.teamcode.Constants.BTURRET_MIN_POS;
+import static org.firstinspires.ftc.teamcode.Constants.ATURRET_MAX_POS;
+import static org.firstinspires.ftc.teamcode.Constants.ATURRET_MIN_POS;
+import static org.firstinspires.ftc.teamcode.Constants.TURRETSHARED;
+import static org.firstinspires.ftc.teamcode.Constants.TURRETTOPLEVEL;
 
 
 @TeleOp(name = "!SusanTeleOp", group = "!Primary")
@@ -39,8 +45,8 @@ public class NewTeleOp extends LinearOpMode {
     DcMotor intakeMotor;*/
     private double slowModeMultiplier = 1;
     Orientation angles;
-    double tbottom = (TURRET_MAX_POS - TURRET_MIN_POS) / 2;
-    double tlifter = (TURRET_MAX_POS - TURRET_MIN_POS) / 2; // Start at halfway position
+    double tbottom = .5;
+    double tlifter = .49;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -292,18 +298,24 @@ public class NewTeleOp extends LinearOpMode {
 
          */
         //TODO: Check the left stick???
-        if(gamepad2.left_stick_y > DRIVE_STICK_THRESHOLD){
-            tlifter += TURRET_INCREMENT;
+        if(gamepad2.left_bumper){
+            tlifter = TURRETTOPLEVEL;
         }
-        else if(gamepad2.left_stick_y < -DRIVE_STICK_THRESHOLD){
-            tlifter -= TURRET_INCREMENT;
+        if(gamepad2.left_trigger > TRIGGER_THRESHOLD){
+            tlifter = TURRETSHARED;
+        }
+        if(gamepad2.left_stick_y > DRIVE_STICK_THRESHOLD2 && tlifter <= ATURRET_MAX_POS){
+            tlifter += ATURRET_INCREMENT;
+        }
+        else if(gamepad2.left_stick_y < -DRIVE_STICK_THRESHOLD2 && tlifter >= ATURRET_MIN_POS){
+            tlifter -= ATURRET_INCREMENT;
         }
         //since the y value needs to be reversed?
-        if(gamepad2.right_stick_x > DRIVE_STICK_THRESHOLD){
-            tbottom -= TURRET_INCREMENT;
+        if(gamepad2.right_stick_x > DRIVE_STICK_THRESHOLD2 && tbottom >= BTURRET_MIN_POS){
+            tbottom -= BTURRET_INCREMENT;
         }
-        else if(gamepad2.right_stick_x < -DRIVE_STICK_THRESHOLD){
-            tbottom += TURRET_INCREMENT;
+        else if(gamepad2.right_stick_x < -DRIVE_STICK_THRESHOLD2 && tbottom <= BTURRET_MAX_POS){
+            tbottom += BTURRET_INCREMENT;
         }
         // Display the current value
         telemetry.addData("Bottom Servo Position", "%5.2f", rb.turretBottom.getPosition());
@@ -315,7 +327,8 @@ public class NewTeleOp extends LinearOpMode {
         rb.turretBottom.setPosition(tbottom);
         rb.turretLift.setPosition(tlifter);
         sleep(TURRET_CYCLE_MS);
-        idle();
+        //sleep(TURRET_CYCLE_MS);
+        //idle();
     }
 
     /**
