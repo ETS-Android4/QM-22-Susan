@@ -92,18 +92,20 @@ public class NewTeleOp extends LinearOpMode {
             //turntable(); //
             //telemetry.addData("Status:", "turntable ok");
             //telemetry.update();
-            slider();
+            //slider();
             //telemetry.addData("Status:", "slider ok");
             //telemetry.update();
             intake();
             //telemetry.addData("Status:", "intake ok");
             //telemetry.update();
             turret();
+            //turntable();
+
             telemetry.addData("FR Encoder", rb.RFmotor.getCurrentPosition());
             telemetry.addData("FL Encoder", rb.LFmotor.getCurrentPosition());
             telemetry.addData("BR Encoder", rb.RBmotor.getCurrentPosition());
             telemetry.addData("BL Encoder", rb.LBmotor.getCurrentPosition());
-            telemetry.addData("Slider Spool Encoder", rb.sliderSpool.getCurrentPosition());
+            //telemetry.addData("Slider Spool Encoder", rb.sliderSpool.getCurrentPosition());
 
             /*
             telemetry.addData("trigger value", gamepad2.left_trigger);
@@ -137,9 +139,10 @@ public class NewTeleOp extends LinearOpMode {
 //        pattern = RevBlinkinLedDriver.BlinkinPattern.ORANGE;
 //        blinkinLedDriver.setPattern(pattern);
         //DRIVE_STICK_THRESHOLD = deadzone
-        if (gamepad1.b) {
+        if (gamepad1.left_trigger > TRIGGER_THRESHOLD) {
             slowModeMultiplier = .25;
-        } else {
+        }
+        else {
             slowModeMultiplier = 1;
         }
         if (rightX < -DRIVE_STICK_THRESHOLD || rightX > DRIVE_STICK_THRESHOLD || leftY < -DRIVE_STICK_THRESHOLD || leftY > DRIVE_STICK_THRESHOLD || leftX < -DRIVE_STICK_THRESHOLD || leftX > DRIVE_STICK_THRESHOLD) {
@@ -176,21 +179,21 @@ public class NewTeleOp extends LinearOpMode {
     }
     private void turntable(){ //throws InterruptedException {
         //turntable
+
         if(gamepad2.a){
             rb.turnTable.setPower(redturnTablePower);
             telemetry.addData("A button","Pressed");
-            telemetry.update();
         }
         else if(gamepad2.b){
             rb.turnTable.setPower(blueturnTablePower);
-            telemetry.addData("A button","Pressed");
-            telemetry.update();
+            telemetry.addData("B button","Pressed");
         }
         else {
             rb.turnTable.setPower(0);
             telemetry.addData("A button", "Not Pressed");
-            telemetry.update();
         }
+
+
     }
 
     private void slider() throws InterruptedException{
@@ -214,6 +217,7 @@ public class NewTeleOp extends LinearOpMode {
         }
         */
         //TODO: Check these to make sure the gamepad is correct
+
         if (gamepad2.left_trigger > TRIGGER_THRESHOLD)
             rb.sliderSpool.setPower(.75);
         else if (gamepad2.left_bumper)
@@ -221,7 +225,9 @@ public class NewTeleOp extends LinearOpMode {
         else
             rb.sliderSpool.setPower(0);
 
-        /*if ((gamepad2.left_trigger > 0.05f && rb.sliderSpool.getCurrentPosition() < -30))
+
+        /*
+        if ((gamepad2.left_trigger > 0.05f && rb.sliderSpool.getCurrentPosition() < -30))
             rb.sliderSpool.setPower(.75);
         else if (gamepad2.left_bumper && rb.sliderSpool.getCurrentPosition() > -1840)
             rb.sliderSpool.setPower(-.75);
@@ -273,6 +279,7 @@ public class NewTeleOp extends LinearOpMode {
         }*/
     }
     private void turret() throws InterruptedException{
+        /*
         if (gamepad1.left_trigger > TRIGGER_THRESHOLD)
             tbottom += TURRET_INCREMENT;
         else if (gamepad1.right_trigger > TRIGGER_THRESHOLD)
@@ -283,11 +290,25 @@ public class NewTeleOp extends LinearOpMode {
         else if (gamepad1.right_bumper)
             tlifter -= TURRET_INCREMENT;
 
+         */
+        //TODO: Check the left stick???
+        if(gamepad2.left_stick_y > DRIVE_STICK_THRESHOLD){
+            tlifter += TURRET_INCREMENT;
+        }
+        else if(gamepad2.left_stick_y < -DRIVE_STICK_THRESHOLD){
+            tlifter -= TURRET_INCREMENT;
+        }
+        //since the y value needs to be reversed?
+        if(gamepad2.right_stick_x > DRIVE_STICK_THRESHOLD){
+            tbottom -= TURRET_INCREMENT;
+        }
+        else if(gamepad2.right_stick_x < -DRIVE_STICK_THRESHOLD){
+            tbottom += TURRET_INCREMENT;
+        }
         // Display the current value
         telemetry.addData("Bottom Servo Position", "%5.2f", rb.turretBottom.getPosition());
         telemetry.addData("Lifter Servo Position", "%5.2f", rb.turretLift.getPosition());
         telemetry.addData(">", "Press Stop to end test." );
-        telemetry.update();
 
         // Set the servo to the new position and pause;
         //turretBottom.setPower(bottom);
