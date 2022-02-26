@@ -120,7 +120,7 @@ public class NewHardware {
         LFmotor = hardwareMap.get(DcMotor.class, "leftfront");
         LBmotor = hardwareMap.get(DcMotor.class, "leftback");
 
-        //turnTable = hardwareMap.get(DcMotor.class, "turntable");
+        turnTable = hardwareMap.get(DcMotor.class, "turntable");
         //sliderSpool = hardwareMap.get(DcMotor.class, "slider");
         intakeMotor= hardwareMap.get(DcMotor.class, "intake");
 

@@ -22,7 +22,7 @@ public class Constants {
     public static final double redturnTablePower = -0.25;
 
     //Controls:
-    public static final float DRIVE_STICK_THRESHOLD = .0f;
+    public static final float DRIVE_STICK_THRESHOLD = .05f;
     public static final float DRIVE_STICK_THRESHOLD2 = .5f;
     public static final float DRIVE_STICK_THRESHOLD_SQUARED = DRIVE_STICK_THRESHOLD * DRIVE_STICK_THRESHOLD;
     public static final float TRIGGER_THRESHOLD = .07f;

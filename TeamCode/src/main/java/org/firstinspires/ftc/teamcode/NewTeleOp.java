@@ -29,7 +29,7 @@ import static org.firstinspires.ftc.teamcode.Constants.TURRETSHARED;
 import static org.firstinspires.ftc.teamcode.Constants.TURRETTOPLEVEL;
 
 
-@TeleOp(name = "!SusanTeleOp", group = "!Primary")
+@TeleOp(name = "!!SusanTeleOp", group = "!Primary")
 public class NewTeleOp extends LinearOpMode {
 
     //private final FtcDashboard dashboard = FtcDashboard.getInstance(); //Comment this out when not using dashboard
@@ -105,7 +105,7 @@ public class NewTeleOp extends LinearOpMode {
             //telemetry.addData("Status:", "intake ok");
             //telemetry.update();
             turret();
-            //turntable();
+            turntable();
 
             telemetry.addData("FR Encoder", rb.RFmotor.getCurrentPosition());
             telemetry.addData("FL Encoder", rb.LFmotor.getCurrentPosition());
@@ -170,7 +170,6 @@ public class NewTeleOp extends LinearOpMode {
             rearLeftPower = drive - strafe + turn;
             rearRightPower = drive + strafe - turn;
             rb.drivefour(frontRightPower, frontLeftPower, rearRightPower, rearLeftPower);
-
         }
         else {
             rb.driveStop();
