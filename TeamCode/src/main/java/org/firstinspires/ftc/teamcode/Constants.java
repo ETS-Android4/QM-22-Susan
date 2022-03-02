@@ -2,15 +2,23 @@ package org.firstinspires.ftc.teamcode;
 
 public class Constants {
     //Turret:
-    static final double BTURRET_INCREMENT   = 0.005;
-    static final double ATURRET_INCREMENT   = 0.0025; // amount to slew servo each CYCLE_MS cycle
-    static final int    TURRET_CYCLE_MS    =   52;     // period of each cycle
+    static final double BTURRET_INCREMENT   = 0.01;
+    static final double ATURRET_INCREMENT   = 0.01; // amount to slew servo each CYCLE_MS cycle
+    static final int    TURRET_CYCLE_MS    =   60;     // period of each cycle
+    static final double SLOWBTURRET_INCREMENT   = 0.005;
+    static final double SLOWATURRET_INCREMENT   = 0.005; // amount to slew servo each CYCLE_MS cycle
+    static final int    SLOWTURRET_CYCLE_MS    =   40;     // period of each cycle
+
+    static final double ATURRET_MAX_POS     =  .55;     // Maximum rotational position
+    static final double ATURRET_MIN_POS     =  .41;     // Minimum rotational position
+
+    //TODO: FIX THESE
     static final double BTURRET_MAX_POS     =  .65;     // Maximum rotational position
     static final double BTURRET_MIN_POS     =  .38;     // Minimum rotational position
-    static final double ATURRET_MAX_POS     =  .52;     // Maximum rotational position
-    static final double ATURRET_MIN_POS     =  .42;     // Minimum rotational position
-    static final double TURRETTOPLEVEL      =  .43;
-    static final double TURRETSHARED        =  .5;
+
+    //TODO: FIX THESE
+    static final double TURRETTOPLEVEL      =  .49;
+    static final double TURRETSHARED        =  .43;
     //.45, .5
 
 
