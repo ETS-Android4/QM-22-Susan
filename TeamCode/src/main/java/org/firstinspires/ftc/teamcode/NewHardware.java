@@ -121,7 +121,7 @@ public class NewHardware {
         LBmotor = hardwareMap.get(DcMotor.class, "leftback");
 
         turnTable = hardwareMap.get(DcMotor.class, "turntable");
-        //sliderSpool = hardwareMap.get(DcMotor.class, "slider");
+        sliderSpool = hardwareMap.get(DcMotor.class, "slider");
         intakeMotor= hardwareMap.get(DcMotor.class, "intake");
 
 
@@ -174,7 +174,7 @@ public class NewHardware {
         RBmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LFmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LBmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //sliderSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sliderSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //intakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         // Set all motor encoder options.
@@ -182,6 +182,9 @@ public class NewHardware {
         RBmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LFmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LBmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        sliderSpool.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        turnTable.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         /*
         sliderSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

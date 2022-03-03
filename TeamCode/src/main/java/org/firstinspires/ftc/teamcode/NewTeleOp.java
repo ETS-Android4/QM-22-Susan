@@ -49,7 +49,7 @@ public class NewTeleOp extends LinearOpMode {
     private double slowModeMultiplier = 1;
     Orientation angles;
     double tbottom = .476;
-    double tlifter = .49;
+    double tlifter = .42;
     private int turret_sleep = TURRET_CYCLE_MS;
 
     @Override
@@ -99,10 +99,10 @@ public class NewTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
 
             drive(); //Drive robot with sticks
-            //turntable(); //
+            turntable(); //
             //telemetry.addData("Status:", "turntable ok");
             //telemetry.update();
-            //slider();
+            slider();
             //telemetry.addData("Status:", "slider ok");
             //telemetry.update();
             intake();
@@ -226,15 +226,20 @@ public class NewTeleOp extends LinearOpMode {
         }
         */
         //TODO: Check these to make sure the gamepad is correct
-
+        /*
         if (gamepad2.left_trigger > TRIGGER_THRESHOLD)
             rb.sliderSpool.setPower(.75);
         else if (gamepad2.left_bumper)
             rb.sliderSpool.setPower(-.75);
         else
             rb.sliderSpool.setPower(0);
-
-
+        */
+        if (gamepad2.dpad_up)
+            rb.sliderSpool.setPower(.75);
+        else if (gamepad2.dpad_down)
+            rb.sliderSpool.setPower(-.75);
+        else
+            rb.sliderSpool.setPower(0);
         /*
         if ((gamepad2.left_trigger > 0.05f && rb.sliderSpool.getCurrentPosition() < -30))
             rb.sliderSpool.setPower(.75);
@@ -324,12 +329,19 @@ public class NewTeleOp extends LinearOpMode {
         }*/
         //else {
             turret_sleep = TURRET_CYCLE_MS;
+            if(gamepad2.left_stick_y > DRIVE_STICK_THRESHOLD2){// && tlifter <= ATURRET_MAX_POS){
+                tlifter += ATURRET_INCREMENT;
+            }
+            else if(gamepad2.left_stick_y < -DRIVE_STICK_THRESHOLD2){// && tlifter >= ATURRET_MIN_POS){
+                tlifter -= ATURRET_INCREMENT;
+            }
+            /*
             if(gamepad2.left_stick_y > DRIVE_STICK_THRESHOLD2 && tlifter >= ATURRET_MIN_POS){// && tlifter <= ATURRET_MAX_POS){
                 tlifter -= ATURRET_INCREMENT;
             }
             else if(gamepad2.left_stick_y < -DRIVE_STICK_THRESHOLD2 && tlifter <= ATURRET_MAX_POS){// && tlifter >= ATURRET_MIN_POS){
                 tlifter += ATURRET_INCREMENT;
-            }
+            }*/
             //since the y value needs to be reversed?
             if(gamepad2.right_stick_x > DRIVE_STICK_THRESHOLD2){// && tbottom >= BTURRET_MIN_POS){
                 tbottom -= BTURRET_INCREMENT;
