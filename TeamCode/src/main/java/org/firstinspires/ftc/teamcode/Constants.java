@@ -9,17 +9,37 @@ public class Constants {
     static final double SLOWATURRET_INCREMENT   = 0.005; // amount to slew servo each CYCLE_MS cycle
     static final int    SLOWTURRET_CYCLE_MS    =   30;     // period of each cycle
 
-    static final double ATURRET_MAX_POS     =  .57;     // Maximum rotational position
-    static final double ATURRET_MIN_POS     =  .44;     // Minimum rotational position
+    static final double ATURRET_MAX_POS     =  .44;     // Maximum rotational position
+    static final double ATURRET_MIN_POS     =  .55;     // Minimum rotational position
+
+    //.54, .47
+
+    //.52, .41
+
+    //.28-.44
 
     //TODO: FIX THESE
-    static final double BTURRET_MAX_POS     =  .65;     // Maximum rotational position
-    static final double BTURRET_MIN_POS     =  .38;     // Minimum rotational position
+    static final double BTURRET_MAX_POS_RED     =  .65;     // Maximum rotational position
+    static final double BTURRET_MIN_POS_RED     =  .38;     // Minimum rotational position
 
     //TODO: FIX THESE
-    static final double TURRETTOPLEVEL      =  .49;
+    static final double BTURRET_MAX_POS_BLUE     =  .65;     // Maximum rotational position
+    static final double BTURRET_MIN_POS_BLUE     =  .38;     // Minimum rotational position
+    //.47
+    //.55
+
+
+    //TODO: FIX THESE
+    static final double TURRETTOPLEVELCLOSE      =  .49;
+    static final double TURRETTOPLEVELFAR      =  .49;
     static final double TURRETSHARED        =  .43;
+    static final double TURRET_A_INTAKE        =  .43;
     //.45, .5
+
+
+    static final double B_TURRETTOPLEVELCLOSE_      =  .49;
+    static final double B_TURRETTOPLEVELFAR_      =  .49;
+    static final double B_TURRETSHARED_        =  .43;
 
 
     public static double GEAR_RATIO_MULTIPLIER = 1;//-(0.388268398268398);

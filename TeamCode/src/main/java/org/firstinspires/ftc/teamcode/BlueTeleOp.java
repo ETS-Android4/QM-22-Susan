@@ -35,8 +35,8 @@ import static org.firstinspires.ftc.teamcode.Constants.TURRETSHARED;
 import static org.firstinspires.ftc.teamcode.Constants.TURRETTOPLEVELCLOSE;
 
 
-@TeleOp(name = "!!SusanTeleOp", group = "!Primary")
-public class NewTeleOp extends LinearOpMode {
+@TeleOp(name = "!!BlueSusanTeleOp", group = "!Primary")
+public class BlueTeleOp extends LinearOpMode {
 
     //private final FtcDashboard dashboard = FtcDashboard.getInstance(); //Comment this out when not using dashboard
 
@@ -51,7 +51,7 @@ public class NewTeleOp extends LinearOpMode {
     DcMotor intakeMotor;*/
     private double slowModeMultiplier = 1;
     Orientation angles;
-    double tbottom = .46;
+    double tbottom = .476;
     double tlifter = .52;
     private boolean intakefunctionon = true;
     private boolean cargoin = false;
@@ -380,29 +380,27 @@ public class NewTeleOp extends LinearOpMode {
             }
         }*/
         //else {
-            turret_sleep = TURRET_CYCLE_MS;
-            if(gamepad2.left_stick_y > DRIVE_STICK_THRESHOLD2 && tlifter <= ATURRET_MIN_POS){// && tlifter <= ATURRET_MAX_POS){
-                tlifter += ATURRET_INCREMENT;
-            }
-            else if(gamepad2.left_stick_y < -DRIVE_STICK_THRESHOLD2 && tlifter >= ATURRET_MAX_POS){// && tlifter >= ATURRET_MIN_POS){
-                tlifter -= ATURRET_INCREMENT;
-            }
-            if(gamepad2.a){
-                tlifter = .54;
-                tbottom = .47;
-            }
-            if(gamepad2.b){
-                tlifter = .52;
-                tbottom = .41;
-            }
-            /*
-            if(gamepad2.left_stick_y > DRIVE_STICK_THRESHOLD2){// && tlifter <= ATURRET_MAX_POS){
-                tlifter += ATURRET_INCREMENT;
-            }
-            else if(gamepad2.left_stick_y < -DRIVE_STICK_THRESHOLD2){// && tlifter >= ATURRET_MIN_POS){
-                tlifter -= ATURRET_INCREMENT;
-            }
-             */
+        turret_sleep = TURRET_CYCLE_MS;
+        /*if(gamepad2.left_stick_y > DRIVE_STICK_THRESHOLD2 && tlifter <= ATURRET_MIN_POS){// && tlifter <= ATURRET_MAX_POS){
+            tlifter += ATURRET_INCREMENT;
+        }
+        else if(gamepad2.left_stick_y < -DRIVE_STICK_THRESHOLD2 && tlifter >= ATURRET_MAX_POS){// && tlifter >= ATURRET_MIN_POS){
+            tlifter -= ATURRET_INCREMENT;
+        }*/
+        if(gamepad2.a){
+            tlifter = .54;
+            tbottom = .48;
+        }
+        if(gamepad2.b){
+            tlifter = .53;
+            tbottom = .54;
+        }
+        if(gamepad2.left_stick_y > DRIVE_STICK_THRESHOLD2){// && tlifter <= ATURRET_MAX_POS){
+            tlifter += ATURRET_INCREMENT;
+        }
+        else if(gamepad2.left_stick_y < -DRIVE_STICK_THRESHOLD2){// && tlifter >= ATURRET_MIN_POS){
+            tlifter -= ATURRET_INCREMENT;
+        }
             /*
             if(gamepad2.left_stick_y > DRIVE_STICK_THRESHOLD2 && tlifter >= ATURRET_MIN_POS){// && tlifter <= ATURRET_MAX_POS){
                 tlifter -= ATURRET_INCREMENT;
@@ -410,13 +408,13 @@ public class NewTeleOp extends LinearOpMode {
             else if(gamepad2.left_stick_y < -DRIVE_STICK_THRESHOLD2 && tlifter <= ATURRET_MAX_POS){// && tlifter >= ATURRET_MIN_POS){
                 tlifter += ATURRET_INCREMENT;
             }*/
-            //since the y value needs to be reversed?
-            if(gamepad2.right_stick_x > DRIVE_STICK_THRESHOLD2){// && tbottom >= BTURRET_MIN_POS){
-                tbottom -= BTURRET_INCREMENT;
-            }
-            else if(gamepad2.right_stick_x < -DRIVE_STICK_THRESHOLD2){// && tbottom <= BTURRET_MAX_POS){
-                tbottom += BTURRET_INCREMENT;
-            }
+        //since the y value needs to be reversed?
+        if(gamepad2.right_stick_x > DRIVE_STICK_THRESHOLD2){// && tbottom >= BTURRET_MIN_POS){
+            tbottom -= BTURRET_INCREMENT;
+        }
+        else if(gamepad2.right_stick_x < -DRIVE_STICK_THRESHOLD2){// && tbottom <= BTURRET_MAX_POS){
+            tbottom += BTURRET_INCREMENT;
+        }
         //}
         // Display the current value
         telemetry.addData("Bottom Servo Position", "%5.2f", rb.turretBottom.getPosition());

@@ -13,11 +13,19 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.opencv.core.Point;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvWebcam;
+
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static org.firstinspires.ftc.teamcode.Constants.DEFAULT_ACCELERATION_INCREMENT;
 import static org.firstinspires.ftc.teamcode.Constants.GEAR_RATIO_MULTIPLIER;
 import static org.firstinspires.ftc.teamcode.Constants.INTAKE_SPEED;
@@ -55,6 +63,10 @@ public class NewHardware {
 
     public Servo turretBottom = null;
     public Servo turretLift = null;
+
+    private ShippingElementPipeline shippingPipeline;
+    private OpenCvWebcam webcam;
+    private Point elementPosition;
     /*
     public DistanceSensor wobbleRangeSensor = null;
     public DistanceSensor hopperRangeSensor = null;
@@ -135,14 +147,42 @@ public class NewHardware {
         //Define and Initialize BNO055IMU
         imu = hardwareMap.get(BNO055IMU.class, "imu 1");
         imu.initialize(parameters);
+
+/*
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        shippingPipeline = new ShippingElementPipeline();
+        webcam.setPipeline(shippingPipeline);
+        webcam.setMillisecondsPermissionTimeout(2500);
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                webcam.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
+                //telemetry.addData("Camera status:", "initialized");
+                telemetry.update();
+            }
+
+            @Override
+            public void onError(int errorCode) {
+                // This will be called if the camera could not be opened
+            }
+        });
+        while(shippingPipeline.getPoint() == null){
+            telemetry.addData("camera ready?", "false");
+            telemetry.addData("pipeline chosen", "Shipping");
+            telemetry.update();
+        }
+        elementPosition = shippingPipeline.getPoint();
+        telemetry.addData("camera ready?", "true");
+*/
         /*
         sideRangeSensor = hwMap.get(DistanceSensor.class, "side_range_sensor");
         */
 
-/*
+
         intakeSensor = hardwareMap.get(DistanceSensor.class, "intake_sensor");
-        shippingSensor = hardwareMap.get(DistanceSensor.class, "shipping_sensor");
-*/
+        //shippingSensor = hardwareMap.get(DistanceSensor.class, "shipping_sensor");
+
 
         // Define and Initialize LED's
         // blinkinLedDriver = hwMap.get(RevBlinkinLedDriver.class, "blinkin");
