@@ -1,9 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import static org.firstinspires.ftc.teamcode.Constants.ATURRET_INCREMENT;
+import static org.firstinspires.ftc.teamcode.Constants.BTURRET_INCREMENT;
+import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD;
+import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD2;
+import static org.firstinspires.ftc.teamcode.Constants.TRIGGER_THRESHOLD;
+import static org.firstinspires.ftc.teamcode.Constants.TURRET_CYCLE_MS;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Func;
@@ -12,27 +18,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import java.util.Locale;
 
-import static org.firstinspires.ftc.teamcode.Constants.BTURRET_INCREMENT;
-import static org.firstinspires.ftc.teamcode.Constants.ATURRET_INCREMENT;
-import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD;
-import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD2;
-import static org.firstinspires.ftc.teamcode.Constants.SLOWBTURRET_INCREMENT;
-import static org.firstinspires.ftc.teamcode.Constants.SLOWATURRET_INCREMENT;
-import static org.firstinspires.ftc.teamcode.Constants.SLOWTURRET_CYCLE_MS;
-import static org.firstinspires.ftc.teamcode.Constants.TRIGGER_THRESHOLD;
-import static org.firstinspires.ftc.teamcode.Constants.blueturnTablePower;
-import static org.firstinspires.ftc.teamcode.Constants.redturnTablePower;
-import static org.firstinspires.ftc.teamcode.Constants.TURRET_CYCLE_MS;
-import static org.firstinspires.ftc.teamcode.Constants.BTURRET_MAX_POS_RED;
-import static org.firstinspires.ftc.teamcode.Constants.BTURRET_MIN_POS_RED;
-import static org.firstinspires.ftc.teamcode.Constants.BTURRET_MAX_POS_BLUE;
-import static org.firstinspires.ftc.teamcode.Constants.BTURRET_MIN_POS_BLUE;
-import static org.firstinspires.ftc.teamcode.Constants.ATURRET_MAX_POS;
-import static org.firstinspires.ftc.teamcode.Constants.ATURRET_MIN_POS;
-import static org.firstinspires.ftc.teamcode.Constants.TURRETSHARED;
-import static org.firstinspires.ftc.teamcode.Constants.TURRETTOPLEVELCLOSE;
+import java.util.Locale;
 
 
 @TeleOp(name = "!!BlueSusanTeleOp", group = "!Primary")
@@ -56,6 +43,9 @@ public class BlueTeleOp extends LinearOpMode {
     private boolean intakefunctionon = true;
     private boolean cargoin = false;
     private int turret_sleep = TURRET_CYCLE_MS;
+    int runSpinner;
+    double spin;
+    public double startTime = runtime.seconds();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -114,7 +104,6 @@ public class BlueTeleOp extends LinearOpMode {
             //telemetry.addData("Status:", "intake ok");
             //telemetry.update();
             turret();
-            turntable();
 
             telemetry.addData("FR Encoder", rb.RFmotor.getCurrentPosition());
             telemetry.addData("FL Encoder", rb.LFmotor.getCurrentPosition());
@@ -215,25 +204,82 @@ public class BlueTeleOp extends LinearOpMode {
             //Stop robot if no stick value (delete this if u want to drift lol)
         }
     }
-    private void turntable(){ //throws InterruptedException {
-        //turntable
-
-        if(gamepad1.a){
-            rb.turnTable.setPower(redturnTablePower);
-            telemetry.addData("A button","Pressed");
+    private void turntable() { //throws InterruptedException {
+        //Using the spinner
+        if (gamepad1.a) {
+            runSpinner = 1;
+            runtime.reset();
+            resetStartTime();
         }
-        else if(gamepad1.b){
-            rb.turnTable.setPower(blueturnTablePower);
-            telemetry.addData("B button","Pressed");
+        if (gamepad1.b) {
+            runSpinner = 2;
+            runtime.reset();
+            resetStartTime();
         }
-        else {
-            rb.turnTable.setPower(0);
-            telemetry.addData("A button", "Not Pressed");
+        if (runSpinner == 1 && startTime < 1.2) {
+            spin = 0.18/4 + (startTime * 0.18/4);
+            //0.2,0.22
+            telemetry.addData("spinner power", spin);
+            telemetry.addData("is it working", 2);
+        } else if (runSpinner == 1 && startTime > 1.2 && startTime < 1.4) {
+            spin = 1/4;
+            telemetry.addData("spinner power", spin);
+        } else if (startTime > 1.4) {
+            spin = 0;
+            telemetry.addData("done:)", 1);
+            runSpinner = 0;
+
         }
+        if (runSpinner == 2 && startTime < 1.2) {
+            spin = -(0.18/4 + (startTime * 0.18/4));
+            telemetry.addData("spinner power", spin);
+            telemetry.addData("is it working", 2);
+        } else if (runSpinner == 2 && startTime > 1.2 && startTime < 1.4) {
+            spin = -1/4;
+            telemetry.addData("spinner power", spin);
+        } else if (startTime > 1.4) {
+            spin = 0;
+            telemetry.addData("done:)", 1);
+            runSpinner = 0;
 
+        }
+        if (gamepad2.a) {
+            runSpinner = 1;
+            runtime.reset();
+            resetStartTime();
+        }
+        if (gamepad2.b) {
+            runSpinner = 2;
+            runtime.reset();
+            resetStartTime();
+        }
+        if (runSpinner == 1 && startTime < 1.2) {
+            spin = 0.18/4 + (startTime * 0.18/4);
+            //0.2,0.22
+            telemetry.addData("spinner power", spin);
+            telemetry.addData("is it working", 2);
+        } else if (runSpinner == 1 && startTime > 1.2 && startTime < 1.4) {
+            spin = 1/4;
+            telemetry.addData("spinner power", spin);
+        } else if (startTime > 1.4) {
+            spin = 0;
+            telemetry.addData("done:)", 1);
+            runSpinner = 0;
 
+        }
+        if (runSpinner == 2 && startTime < 1.2) {
+            spin = -(0.18/4 + (startTime * 0.18/4));
+            telemetry.addData("spinner power", spin);
+            telemetry.addData("is it working", 2);
+        } else if (runSpinner == 2 && startTime > 1.2 && startTime < 1.4) {
+            spin = -1/4;
+            telemetry.addData("spinner power", spin);
+        } else if (startTime > 1.4) {
+            spin = 0;
+            telemetry.addData("done:)", 1);
+            runSpinner = 0;
+        }
     }
-
     private void slider() throws InterruptedException{
         //Slider
         /*
