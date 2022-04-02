@@ -109,7 +109,7 @@ public class BlueTeleOp extends LinearOpMode {
             telemetry.addData("FL Encoder", rb.LFmotor.getCurrentPosition());
             telemetry.addData("BR Encoder", rb.RBmotor.getCurrentPosition());
             telemetry.addData("BL Encoder", rb.LBmotor.getCurrentPosition());
-            telemetry.addData("Distance Sensor", rb.intakeSensor.getDistance(DistanceUnit.CM));
+//            telemetry.addData("Distance Sensor", rb.intakeSensor.getDistance(DistanceUnit.CM));
             //telemetry.addData("Slider Spool Encoder", rb.sliderSpool.getCurrentPosition());
 
             /*
@@ -133,9 +133,9 @@ public class BlueTeleOp extends LinearOpMode {
             intakefunctionon = false;
         }
         //TODO: fix these value here (distance sensor)
-        if (rb.intakeSensor.getDistance(DistanceUnit.CM) < 11.7)
-            cargoin = true;
-        else
+//        if (rb.intakeSensor.getDistance(DistanceUnit.CM) < 11.7)
+//            cargoin = true;
+//        else
             cargoin = false;
 
     }
@@ -340,20 +340,20 @@ public class BlueTeleOp extends LinearOpMode {
          */
         if (!intakefunctionon) {
             if (gamepad2.right_trigger > 0.1f)
-                rb.intakeMotor.setPower(.7);
+                rb.intakeMotor.setPower(1);
             else if (gamepad2.right_bumper)
-                rb.intakeMotor.setPower(-1);
+                rb.intakeMotor.setPower(-.7);
             else {
                 rb.intakeMotor.setPower(0);
             }
         }
         else {
-            if (gamepad2.right_trigger > 0.1f)
-                rb.intakeMotor.setPower(.7);
-            else if ((gamepad2.right_bumper || !cargoin)) {
+            if (gamepad2.right_bumper)
+                rb.intakeMotor.setPower(-.7);
+            else if ((gamepad2.right_trigger > 0.1f || !cargoin)) {
                 //the encoder value condition is in place to ensure that the intake doesn't turn on
                 //when trying to spit out cargo
-                rb.intakeMotor.setPower(-1);
+                rb.intakeMotor.setPower(1);
             }
             else {
                 rb.intakeMotor.setPower(0);

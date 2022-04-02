@@ -55,8 +55,8 @@ public class NewHardware {
     public DcMotor sliderSpool = null;
     public DcMotor intakeMotor = null;
 
-    public DistanceSensor intakeSensor = null;
-    Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) intakeSensor;
+//    public DistanceSensor intakeSensor = null;
+//    Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) intakeSensor;
 
     public DistanceSensor shippingSensor = null;
     Rev2mDistanceSensor sensorTimeOfFlight1 = (Rev2mDistanceSensor) shippingSensor;
@@ -180,7 +180,7 @@ public class NewHardware {
         */
 
 
-        intakeSensor = hardwareMap.get(DistanceSensor.class, "intake_sensor");
+//        intakeSensor = hardwareMap.get(DistanceSensor.class, "intake_sensor");
         //shippingSensor = hardwareMap.get(DistanceSensor.class, "shipping_sensor");
 
 

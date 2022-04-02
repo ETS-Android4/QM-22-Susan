@@ -34,7 +34,6 @@ public class BlueTeleOp extends LinearOpMode {
     DcMotor intakeMotor;*/
     private double slowModeMultiplier = 1;
     Orientation angles;
-
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry.setAutoClear(false);
@@ -273,7 +272,7 @@ public class BlueTeleOp extends LinearOpMode {
         if (gamepad2.right_trigger > 0.1f)
             rb.intakeMotor.setPower(1);
         else if (gamepad2.right_bumper)
-            rb.intakeMotor.setPower(-1);
+            rb.intakeMotor.setPower(-.7);
         else{
             rb.intakeMotor.setPower(0);
         }

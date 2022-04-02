@@ -120,8 +120,8 @@ public class NewTeleOp extends LinearOpMode {
             telemetry.addData("FL Encoder", rb.LFmotor.getCurrentPosition());
             telemetry.addData("BR Encoder", rb.RBmotor.getCurrentPosition());
             telemetry.addData("BL Encoder", rb.LBmotor.getCurrentPosition());
-            telemetry.addData("Distance Sensor", rb.intakeSensor.getDistance(DistanceUnit.CM));
-            //telemetry.addData("Slider Spool Encoder", rb.sliderSpool.getCurrentPosition());
+////            telemetry.addData("Distance Sensor", rb.intakeSensor.getDistance(DistanceUnit.CM));
+//            telemetry.addData("Slider Spool Encoder", rb.sliderSpool.getCurrentPosition());
 
             /*
             telemetry.addData("trigger value", gamepad2.left_trigger);
@@ -144,9 +144,9 @@ public class NewTeleOp extends LinearOpMode {
             intakefunctionon = false;
         }
         //TODO: fix these value here (distance sensor)
-        if (rb.intakeSensor.getDistance(DistanceUnit.CM) < 11.7)
-            cargoin = true;
-        else
+//        if (rb.intakeSensor.getDistance(DistanceUnit.CM) < 11.7)
+//            cargoin = true;
+//        else
             cargoin = false;
 
     }
