@@ -12,7 +12,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -24,8 +23,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import java.util.Locale;
 
 
-@TeleOp(name = "!!BlueSusanTeleOp", group = "!Primary")
-public class BlueTeleOp extends LinearOpMode {
+@TeleOp(name = "AutoWithoutRoadRunner", group = "!Primary")
+public class RRlessAuto extends LinearOpMode {
 
     //private final FtcDashboard dashboard = FtcDashboard.getInstance(); //Comment this out when not using dashboard
 
@@ -45,7 +44,6 @@ public class BlueTeleOp extends LinearOpMode {
     private boolean intakefunctionon = true;
     private boolean cargoin = false;
     private int turret_sleep = TURRET_CYCLE_MS;
-    private int slidePos = 0;
     int runSpinner;
     double spin;
     public double startTime = runtime.seconds();
@@ -87,9 +85,7 @@ public class BlueTeleOp extends LinearOpMode {
         rb.leftBlocker.setPosition(BLOCKER_LEFT_START);
         rb.rightBlocker.setPosition(BLOCKER_RIGHT_START);
          */
-        rb.sliderSpool.setTargetPosition(0);
-        rb.sliderSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+        rb.sliderSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         waitForStart(); //Everything up to here is initialization
         runtime.reset();
         telemetry.setAutoClear(true);
@@ -141,7 +137,7 @@ public class BlueTeleOp extends LinearOpMode {
 //        if (rb.intakeSensor.getDistance(DistanceUnit.CM) < 11.7)
 //            cargoin = true;
 //        else
-            cargoin = false;
+        cargoin = false;
 
     }
     private void drive() {
@@ -327,17 +323,13 @@ public class BlueTeleOp extends LinearOpMode {
         else
             rb.sliderSpool.setPower(0);
         */
-        //Limiting slide positions
+        if (gamepad2.dpad_up)
 
-        rb.sliderSpool.setTargetPosition(slidePos);
-        rb.sliderSpool.setPower(.75);
-
-            if (gamepad2.dpad_up)
-                slidePos = Range.clip(slidePos + 1, 0, 3000);
-            else if (gamepad2.dpad_down)
-                slidePos = Range.clip(slidePos - 1, 0, 3000);
-
-
+            rb.sliderSpool.setPower(.75);
+        else if (gamepad2.dpad_down)
+            rb.sliderSpool.setPower(-.75);
+        else
+            rb.sliderSpool.setPower(0);
         /*
         if ((gamepad2.left_trigger > 0.05f && rb.sliderSpool.getCurrentPosition() < -30))
             rb.sliderSpool.setPower(.75);

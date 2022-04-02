@@ -220,12 +220,12 @@ public class NewHardware {
 
         //intakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         // Set all motor encoder options.
-        RFmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        RBmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        LFmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        LBmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        RFmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LFmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LBmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        sliderSpool.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        sliderSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         turnTable.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         /*
