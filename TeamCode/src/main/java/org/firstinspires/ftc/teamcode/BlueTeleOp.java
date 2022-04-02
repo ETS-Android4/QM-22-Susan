@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -39,8 +40,9 @@ public class BlueTeleOp extends LinearOpMode {
     DcMotor intakeMotor;*/
     private double slowModeMultiplier = 1;
     Orientation angles;
-    double tbottom = .476;
-    double tlifter = .52;
+    double tbottom = .5;
+    double tlifter = .45;
+    double boxPos = 0.5;
     private boolean intakefunctionon = true;
     private boolean cargoin = false;
     private int turret_sleep = TURRET_CYCLE_MS;
@@ -93,6 +95,7 @@ public class BlueTeleOp extends LinearOpMode {
         //rb.runIntake(true, false); //Start with intake running TODO: Turn this on for real comp
         // run this until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+            presetPositions();
             extrafunctions();
             drive(); //Drive robot with sticks
             turntable(); //
@@ -110,6 +113,9 @@ public class BlueTeleOp extends LinearOpMode {
             telemetry.addData("FL Encoder", rb.LFmotor.getCurrentPosition());
             telemetry.addData("BR Encoder", rb.RBmotor.getCurrentPosition());
             telemetry.addData("BL Encoder", rb.LBmotor.getCurrentPosition());
+            telemetry.addData("Turret Base", rb.turretBottom.getPosition());
+            telemetry.addData("Turret Lift", rb.turretLift.getPosition());
+            telemetry.addData("boxServo", rb.turretLift.getPosition());
 //            telemetry.addData("Distance Sensor", rb.intakeSensor.getDistance(DistanceUnit.CM));
             telemetry.addData("Slider Spool Encoder", rb.sliderSpool.getCurrentPosition());
 
@@ -283,7 +289,6 @@ public class BlueTeleOp extends LinearOpMode {
     }
     private void presetPositions() throws InterruptedException {
         if(gamepad2.a){
-
             tlifter = .45;
             tbottom = .5;
         }
@@ -480,6 +485,12 @@ public class BlueTeleOp extends LinearOpMode {
         sleep(TURRET_CYCLE_MS);
         //sleep(TURRET_CYCLE_MS);
         //idle();
+        double update = gamepad2.left_trigger - gamepad2.right_trigger;
+        boxPos += update* 0.03;
+        boxPos = Range.clip(boxPos,0,1);
+        rb.boxServo.setPosition(boxPos);
+
+
     }
 
     /**

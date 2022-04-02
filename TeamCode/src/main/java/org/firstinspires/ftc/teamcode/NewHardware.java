@@ -63,6 +63,7 @@ public class NewHardware {
 
     public Servo turretBottom = null;
     public Servo turretLift = null;
+    public Servo boxServo = null;
 
     private ShippingElementPipeline shippingPipeline;
     private OpenCvWebcam webcam;
@@ -143,9 +144,10 @@ public class NewHardware {
         */
         turretBottom = hardwareMap.get(Servo.class, "turretBottom");
         turretLift = hardwareMap.get(Servo.class, "turretLift");
+        boxServo = hardwareMap.get(Servo.class, "boxServo");
 
         //Define and Initialize BNO055IMU
-        imu = hardwareMap.get(BNO055IMU.class, "imu 1");
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
 
 /*
@@ -254,10 +256,11 @@ public class NewHardware {
      * Stops all motors and applies zero power behavior RFmotorom config (either BRAKE or FLOAT)
      */
     public void driveStop() {
-        RFmotor.setPower(0);
-        LFmotor.setPower(0);
-        RBmotor.setPower(0);
-        LBmotor.setPower(0);
+        drive(0);
+//        RFmotor.setPower(0);
+//        LFmotor.setPower(0);
+//        RBmotor.setPower(0);
+//        LBmotor.setPower(0);
     }
 
     /**
