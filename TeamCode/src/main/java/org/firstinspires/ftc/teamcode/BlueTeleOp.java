@@ -40,8 +40,8 @@ public class BlueTeleOp extends LinearOpMode {
     DcMotor intakeMotor;*/
     private double slowModeMultiplier = 1;
     Orientation angles;
-    double tbottom = .476;
-    double tlifter = .52;
+    double tbottom = .5;
+    double tlifter = .45;
     private boolean intakefunctionon = true;
     private boolean cargoin = false;
     private int turret_sleep = TURRET_CYCLE_MS;
@@ -98,6 +98,7 @@ public class BlueTeleOp extends LinearOpMode {
         // run this until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             extrafunctions();
+            presetPositions();
             drive(); //Drive robot with sticks
             turntable(); //
             //telemetry.addData("Status:", "turntable ok");
@@ -288,8 +289,7 @@ public class BlueTeleOp extends LinearOpMode {
     private void presetPositions() throws InterruptedException {
         rb.sliderSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         if(gamepad2.a){
-            rb.sliderSpool.setTargetPosition(0);
-            rb.sliderSpool.setPower(.75);
+            slidePos = 0;
             tlifter = .45;
             tbottom = .5;
         }
@@ -330,12 +330,12 @@ public class BlueTeleOp extends LinearOpMode {
         //Limiting slide positions
 
         rb.sliderSpool.setTargetPosition(slidePos);
-        rb.sliderSpool.setPower(.75);
+        rb.sliderSpool.setPower(1);
 
             if (gamepad2.dpad_up)
-                slidePos = Range.clip(slidePos + 1, 0, 3000);
+                slidePos = Range.clip(slidePos + 300, 0, 3200);
             else if (gamepad2.dpad_down)
-                slidePos = Range.clip(slidePos - 1, 0, 3000);
+                slidePos = Range.clip(slidePos - 300, 0, 3200);
 
 
         /*
