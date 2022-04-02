@@ -10,6 +10,7 @@ import static org.firstinspires.ftc.teamcode.Constants.TURRET_CYCLE_MS;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Func;
@@ -84,7 +85,7 @@ public class BlueTeleOp extends LinearOpMode {
         rb.leftBlocker.setPosition(BLOCKER_LEFT_START);
         rb.rightBlocker.setPosition(BLOCKER_RIGHT_START);
          */
-
+        rb.sliderSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         waitForStart(); //Everything up to here is initialization
         runtime.reset();
         telemetry.setAutoClear(true);
@@ -110,7 +111,7 @@ public class BlueTeleOp extends LinearOpMode {
             telemetry.addData("BR Encoder", rb.RBmotor.getCurrentPosition());
             telemetry.addData("BL Encoder", rb.LBmotor.getCurrentPosition());
 //            telemetry.addData("Distance Sensor", rb.intakeSensor.getDistance(DistanceUnit.CM));
-            //telemetry.addData("Slider Spool Encoder", rb.sliderSpool.getCurrentPosition());
+            telemetry.addData("Slider Spool Encoder", rb.sliderSpool.getCurrentPosition());
 
             /*
             telemetry.addData("trigger value", gamepad2.left_trigger);
@@ -243,16 +244,16 @@ public class BlueTeleOp extends LinearOpMode {
             runSpinner = 0;
 
         }
-        if (gamepad2.a) {
-            runSpinner = 1;
-            runtime.reset();
-            resetStartTime();
-        }
-        if (gamepad2.b) {
-            runSpinner = 2;
-            runtime.reset();
-            resetStartTime();
-        }
+//        if (gamepad1.a) {
+//            runSpinner = 1;
+//            runtime.reset();
+//            resetStartTime();
+//        }
+//        if (gamepad1.b) {
+//            runSpinner = 2;
+//            runtime.reset();
+//            resetStartTime();
+//        }
         if (runSpinner == 1 && startTime < 1.2) {
             spin = 0.18/4 + (startTime * 0.18/4);
             //0.2,0.22
@@ -278,6 +279,17 @@ public class BlueTeleOp extends LinearOpMode {
             spin = 0;
             telemetry.addData("done:)", 1);
             runSpinner = 0;
+        }
+    }
+    private void presetPositions() throws InterruptedException {
+        if(gamepad2.a){
+
+            tlifter = .45;
+            tbottom = .5;
+        }
+        if(gamepad2.b){
+            tlifter = .53;
+            tbottom = .54;
         }
     }
     private void slider() throws InterruptedException{
@@ -310,6 +322,7 @@ public class BlueTeleOp extends LinearOpMode {
             rb.sliderSpool.setPower(0);
         */
         if (gamepad2.dpad_up)
+
             rb.sliderSpool.setPower(.75);
         else if (gamepad2.dpad_down)
             rb.sliderSpool.setPower(-.75);
@@ -342,14 +355,14 @@ public class BlueTeleOp extends LinearOpMode {
             if (gamepad2.right_trigger > 0.1f)
                 rb.intakeMotor.setPower(1);
             else if (gamepad2.right_bumper)
-                rb.intakeMotor.setPower(-.7);
+                rb.intakeMotor.setPower(-.8);
             else {
                 rb.intakeMotor.setPower(0);
             }
         }
         else {
             if (gamepad2.right_bumper)
-                rb.intakeMotor.setPower(-.7);
+                rb.intakeMotor.setPower(-.8);
             else if ((gamepad2.right_trigger > 0.1f || !cargoin)) {
                 //the encoder value condition is in place to ensure that the intake doesn't turn on
                 //when trying to spit out cargo
@@ -433,14 +446,7 @@ public class BlueTeleOp extends LinearOpMode {
         else if(gamepad2.left_stick_y < -DRIVE_STICK_THRESHOLD2 && tlifter >= ATURRET_MAX_POS){// && tlifter >= ATURRET_MIN_POS){
             tlifter -= ATURRET_INCREMENT;
         }*/
-        if(gamepad2.a){
-            tlifter = .54;
-            tbottom = .48;
-        }
-        if(gamepad2.b){
-            tlifter = .53;
-            tbottom = .54;
-        }
+
         if(gamepad2.left_stick_y > DRIVE_STICK_THRESHOLD2){// && tlifter <= ATURRET_MAX_POS){
             tlifter += ATURRET_INCREMENT;
         }
